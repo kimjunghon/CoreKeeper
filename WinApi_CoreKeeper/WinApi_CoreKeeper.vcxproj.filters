@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\00.MainGame">
+      <UniqueIdentifier>{c43f7cb4-670c-4c36-9b7f-dd755d91e5d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Scene">
+      <UniqueIdentifier>{0423a4a2-0886-43d1-a7ea-5c38a00debd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object">
+      <UniqueIdentifier>{5e80ff38-4673-4615-8a31-52751a2ae4b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\00.Player">
+      <UniqueIdentifier>{f1ec6268-6f3d-478f-923b-3a0e5510a460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.MyBmp">
+      <UniqueIdentifier>{212b0ebe-ec9b-4db6-b1cb-54d74e26b966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Scene\01.Title">
+      <UniqueIdentifier>{259c3148-a63a-4611-8bea-f882b51e94c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Scene\02.Play">
+      <UniqueIdentifier>{5bf73c20-cf85-4e8a-aea2-4c3eea65d3a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Scene\03.Edit">
+      <UniqueIdentifier>{8560fdf1-e2e0-4a91-83e7-2b1ccd4ed14b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Scene\04.Clear">
+      <UniqueIdentifier>{10519d17-846b-40bd-aab1-f5109394ec90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Scene\00.Start">
+      <UniqueIdentifier>{550969cc-8092-4ca1-8d2b-92f6b1ab4e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item">
+      <UniqueIdentifier>{1c8e0e34-a9a6-4b1e-83d7-9d3154bbd6c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\03.Projectile">
+      <UniqueIdentifier>{7fbe7710-4b05-4d7d-9bcf-d0f8efb9e888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item\00.Weapon">
+      <UniqueIdentifier>{47798d4e-ecae-455b-bf10-5565a54579ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item\00.Weapon\01.Bow">
+      <UniqueIdentifier>{b6be339c-76de-4f04-a72a-a1c9ea86e138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item\00.Weapon\00.Melee">
+      <UniqueIdentifier>{36cdab5a-f2f5-44f3-809f-6ff46c9fec6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\04.Wall">
+      <UniqueIdentifier>{8eb9d327-f1d1-4aae-b3aa-de5037e08197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI">
+      <UniqueIdentifier>{36bd7549-7765-4d7e-a006-fc34da6e90b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\01.Inventory">
+      <UniqueIdentifier>{6eb7addf-151e-4f55-a1b3-ea6344e3789e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\00.Mouse">
+      <UniqueIdentifier>{c395328b-cb95-4d26-a248-cc3e4d3f26ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\01.Monster">
+      <UniqueIdentifier>{5a8f0eec-c11d-4429-90b3-d57e98763d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\01.Monster\00.Slime">
+      <UniqueIdentifier>{5d8a0f9b-11ef-4a37-a2e4-7132f97ec229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\01.Monster\01.Boss_Slime">
+      <UniqueIdentifier>{17a4562e-fd9a-4509-8f27-f7e2d7d71fc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item\01.Use">
+      <UniqueIdentifier>{9e152bd0-9b9b-4c52-bb6a-43c14d2c42d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item\01.Use\00.Wall_Item">
+      <UniqueIdentifier>{f8ae9e1c-35c8-4078-ab15-e163afe210ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\03.Craftring">
+      <UniqueIdentifier>{e383b21a-cbf8-4e4e-8e18-bbd0e47a9866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\03.Craftring\01.Crafting">
+      <UniqueIdentifier>{8ba6699d-4ea2-4e7c-a62e-9540885f35fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\03.Craftring\01.Crafting\00.InvenCrafting">
+      <UniqueIdentifier>{7593df84-3dad-41bf-9432-0008b255c9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\03.Craftring\01.Crafting\01.IronCrafting">
+      <UniqueIdentifier>{e5a0f341-429e-406b-b5c8-0f40ec893506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\04.Slot">
+      <UniqueIdentifier>{5cdea83a-a1c4-4b5c-a4b6-3d71ed2acc21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\04.Slot\00.CraftringSlot">
+      <UniqueIdentifier>{3fe9dd0d-50b2-4750-93cb-4755fa8fc952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\05.Equip">
+      <UniqueIdentifier>{ca446934-d9b4-46f1-a677-7b42b8ae27e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Tile">
+      <UniqueIdentifier>{f1703015-0965-42df-bdf2-413be9104c64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\01.Monster\02.Larva">
+      <UniqueIdentifier>{b38a2c65-5c8a-4fef-9b21-58b1d4c59d6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\01.Monster\03.Boss_Hive">
+      <UniqueIdentifier>{330542db-6e5f-4aa2-b7f5-bce2c2fecb4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager">
+      <UniqueIdentifier>{62660d50-fabc-4043-a681-cb3a2e9ac07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\00.SceneMgr">
+      <UniqueIdentifier>{5c6ce794-c29d-4348-aa5d-ba738f90283e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\01.ObjMgr">
+      <UniqueIdentifier>{ab3c3601-a25f-4033-b49f-bce9d5fd7117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\02.TileMgr">
+      <UniqueIdentifier>{3ed1e3e3-457f-47d8-92a7-62fd8d0b9397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\03.KeyMgr">
+      <UniqueIdentifier>{9aa8d647-bf68-437e-9dfd-fd1a1d995e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\04.ScrollMgr">
+      <UniqueIdentifier>{d0f3ddf1-9f10-45d3-bd95-050f2eb9ea9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\05.BmpMgr">
+      <UniqueIdentifier>{9db73e59-b0af-47f6-b3ea-e5a5f3a65011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\07.CollisionMgr">
+      <UniqueIdentifier>{b06edc01-3aee-44a8-ac72-9f3890110d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\08.AbstractFactory">
+      <UniqueIdentifier>{4c292979-fd4d-4b9c-9db7-884c50b200b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\09.CameraMgr">
+      <UniqueIdentifier>{42bb8d0b-2fab-4a0c-8de7-65c64592386f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\10.UiMgr">
+      <UniqueIdentifier>{1d099695-a98f-4f87-827c-ebf7fc7ed152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\03.Projectile\00.PlayerProjectile">
+      <UniqueIdentifier>{63f9cb21-db8b-4623-85b1-89c4ffdaf5d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\03.Projectile\01.BossAcidProjectile">
+      <UniqueIdentifier>{82e7cf25-a1f4-409c-8c3a-42e448a4e069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\06.Effect">
+      <UniqueIdentifier>{371351a6-5c3b-4bb0-b336-db5a42cfe5a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\05.Building">
+      <UniqueIdentifier>{6bd9bc5b-581b-49d9-b8e0-c9f5f32681cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\05.Building\00.CraftingTable">
+      <UniqueIdentifier>{c9db50e9-32f6-45b2-bbe1-75a6e0238809}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\02.Item\02.Armor">
+      <UniqueIdentifier>{b1d21c0e-82b2-498d-9c19-75cb0cb292e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\05.Building\01.Boss_Core">
+      <UniqueIdentifier>{2e512b98-4600-4290-9c23-ad3cdfcb503b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\06.CoreEquip">
+      <UniqueIdentifier>{be7cc10e-f135-4aec-8685-f2a7e0b54639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\06.Shadow">
+      <UniqueIdentifier>{a778fde4-890f-44f4-a270-7caa751ff534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\01.Monster\04.Larva_Egg">
+      <UniqueIdentifier>{cc3179e7-20dd-4d7d-9a1c-e92c05a2c570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\05.Building\02.CookingPot">
+      <UniqueIdentifier>{36f68bfd-a1b0-41f1-864d-4da9d716577f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\03.Craftring\02.Cooking">
+      <UniqueIdentifier>{028dc3b2-f8a8-4a89-838f-d23cf84516c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\05.Building\03.Main_Core">
+      <UniqueIdentifier>{adad21c6-b8e4-4382-9acb-0816e2700c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\07.NPC">
+      <UniqueIdentifier>{f47d5077-4430-4459-b608-00587ad95162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\07.NPC_Dialogue">
+      <UniqueIdentifier>{af33aa22-8429-40a9-9a45-99e38fabfa21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\07.NPC_Dialogue\00.Button">
+      <UniqueIdentifier>{c9246474-11a1-459e-b726-b9e98f96e44b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Object\05.Building\04.Forge">
+      <UniqueIdentifier>{052c639b-d8b7-473d-ac8d-8bf05c391e0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\08.Smelting">
+      <UniqueIdentifier>{fc8857b6-7d98-4739-b384-03f11abf5bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\02.Hp_Bar">
+      <UniqueIdentifier>{7e314a64-f1c4-4062-aff9-6969921f1ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\02.Hp_Bar\00.Player">
+      <UniqueIdentifier>{a73b2c6a-f571-4940-92b7-92060c985d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\02.Hp_Bar\01.Boss">
+      <UniqueIdentifier>{bc351759-56ca-4dd7-96e2-f8fe290042f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\09.Player_Stat">
+      <UniqueIdentifier>{af427672-9fbf-49d1-8d74-fd89663136aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.UI\10.Minimap">
+      <UniqueIdentifier>{3a59752d-537f-4032-9b2f-ffd0780f4bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Manager\11.SoundMgr">
+      <UniqueIdentifier>{66414ee6-16a0-4d85-b22c-e3005fb6e3e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApi_CoreKeeper.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainGame.h">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>소스 파일\01.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>소스 파일\02.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneMgr.h">
+      <Filter>소스 파일\07.Manager\00.SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjMgr.h">
+      <Filter>소스 파일\07.Manager\01.ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>소스 파일\03.Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CTileMgr.h">
+      <Filter>소스 파일\07.Manager\02.TileMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CAbstractFactory.h">
+      <Filter>소스 파일\07.Manager\08.AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>소스 파일\07.Manager\03.KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollMgr.h">
+      <Filter>소스 파일\07.Manager\04.ScrollMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CBmpMgr.h">
+      <Filter>소스 파일\07.Manager\05.BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollisionMgr.h">
+      <Filter>소스 파일\07.Manager\07.CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyBmp.h">
+      <Filter>소스 파일\04.MyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="CStart.h">
+      <Filter>소스 파일\01.Scene\00.Start</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>소스 파일\01.Scene\01.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlay.h">
+      <Filter>소스 파일\01.Scene\02.Play</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>소스 파일\02.Object\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouse.h">
+      <Filter>소스 파일\05.UI\00.Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="CMelee.h">
+      <Filter>소스 파일\02.Object\02.Item\00.Weapon\00.Melee</Filter>
+    </ClInclude>
+    <ClInclude Include="CBow.h">
+      <Filter>소스 파일\02.Object\02.Item\00.Weapon\01.Bow</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>소스 파일\02.Object\02.Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CEdit.h">
+      <Filter>소스 파일\01.Scene\03.Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="CWall.h">
+      <Filter>소스 파일\02.Object\04.Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraMgr.h">
+      <Filter>소스 파일\07.Manager\09.CameraMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CUi.h">
+      <Filter>소스 파일\05.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CInventory.h">
+      <Filter>소스 파일\05.UI\01.Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="CUiMgr.h">
+      <Filter>소스 파일\07.Manager\10.UiMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>소스 파일\02.Object\01.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CSlime.h">
+      <Filter>소스 파일\02.Object\01.Monster\00.Slime</Filter>
+    </ClInclude>
+    <ClInclude Include="CBoss_Slime.h">
+      <Filter>소스 파일\02.Object\01.Monster\01.Boss_Slime</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundMgr.h">
+      <Filter>소스 파일\07.Manager\11.SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CWall_Item.h">
+      <Filter>소스 파일\02.Object\02.Item\01.Use\00.Wall_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CInvenCrafting.h">
+      <Filter>소스 파일\05.UI\03.Craftring\01.Crafting\00.InvenCrafting</Filter>
+    </ClInclude>
+    <ClInclude Include="CIronCrafting.h">
+      <Filter>소스 파일\05.UI\03.Craftring\01.Crafting\01.IronCrafting</Filter>
+    </ClInclude>
+    <ClInclude Include="CSlot.h">
+      <Filter>소스 파일\05.UI\04.Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="CCraftingSlot.h">
+      <Filter>소스 파일\05.UI\04.Slot\00.CraftringSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="CArmor.h">
+      <Filter>소스 파일\02.Object\02.Item\02.Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="CEquip.h">
+      <Filter>소스 파일\05.UI\05.Equip</Filter>
+    </ClInclude>
+    <ClInclude Include="CLarva.h">
+      <Filter>소스 파일\02.Object\01.Monster\02.Larva</Filter>
+    </ClInclude>
+    <ClInclude Include="CBoss_Hive.h">
+      <Filter>소스 파일\02.Object\01.Monster\03.Boss_Hive</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectile.h">
+      <Filter>소스 파일\02.Object\03.Projectile\00.PlayerProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossAcidProjectile.h">
+      <Filter>소스 파일\02.Object\03.Projectile\01.BossAcidProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_HpBar.h">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_HpBar_Background.h">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossHpBar.h">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\01.Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossHPBarBackground.h">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\01.Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>소스 파일\02.Object\06.Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CCraftingTable.h">
+      <Filter>소스 파일\02.Object\05.Building\00.CraftingTable</Filter>
+    </ClInclude>
+    <ClInclude Include="CBoss_Core.h">
+      <Filter>소스 파일\02.Object\05.Building\01.Boss_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CCoreEquip.h">
+      <Filter>소스 파일\05.UI\06.CoreEquip</Filter>
+    </ClInclude>
+    <ClInclude Include="CShadow.h">
+      <Filter>소스 파일\06.Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="CLarva_Egg.h">
+      <Filter>소스 파일\02.Object\01.Monster\04.Larva_Egg</Filter>
+    </ClInclude>
+    <ClInclude Include="CCookingPot.h">
+      <Filter>소스 파일\02.Object\05.Building\02.CookingPot</Filter>
+    </ClInclude>
+    <ClInclude Include="CCrafting.h">
+      <Filter>소스 파일\05.UI\03.Craftring</Filter>
+    </ClInclude>
+    <ClInclude Include="CCooking.h">
+      <Filter>소스 파일\05.UI\03.Craftring\02.Cooking</Filter>
+    </ClInclude>
+    <ClInclude Include="CMain_Core.h">
+      <Filter>소스 파일\02.Object\05.Building\03.Main_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CHitDamage.h">
+      <Filter>소스 파일\02.Object\06.Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CSlimeNPC.h">
+      <Filter>소스 파일\02.Object\07.NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="CDialogue.h">
+      <Filter>소스 파일\05.UI\07.NPC_Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="CButton.h">
+      <Filter>소스 파일\05.UI\07.NPC_Dialogue\00.Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CForge.h">
+      <Filter>소스 파일\02.Object\05.Building\04.Forge</Filter>
+    </ClInclude>
+    <ClInclude Include="CSmelting.h">
+      <Filter>소스 파일\05.UI\08.Smelting</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_Stat.h">
+      <Filter>소스 파일\05.UI\09.Player_Stat</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinimap.h">
+      <Filter>소스 파일\05.UI\10.Minimap</Filter>
+    </ClInclude>
+    <ClInclude Include="CClear.h">
+      <Filter>소스 파일\01.Scene\04.Clear</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinApi_CoreKeeper.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainGame.cpp">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>소스 파일\01.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneMgr.cpp">
+      <Filter>소스 파일\07.Manager\00.SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjMgr.cpp">
+      <Filter>소스 파일\07.Manager\01.ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>소스 파일\03.Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileMgr.cpp">
+      <Filter>소스 파일\07.Manager\02.TileMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyMgr.cpp">
+      <Filter>소스 파일\07.Manager\03.KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrollMgr.cpp">
+      <Filter>소스 파일\07.Manager\04.ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CBmpMgr.cpp">
+      <Filter>소스 파일\07.Manager\05.BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionMgr.cpp">
+      <Filter>소스 파일\07.Manager\07.CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyBmp.cpp">
+      <Filter>소스 파일\04.MyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="CStart.cpp">
+      <Filter>소스 파일\01.Scene\00.Start</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
+      <Filter>소스 파일\01.Scene\01.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlay.cpp">
+      <Filter>소스 파일\01.Scene\02.Play</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>소스 파일\02.Object\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouse.cpp">
+      <Filter>소스 파일\05.UI\00.Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="CMelee.cpp">
+      <Filter>소스 파일\02.Object\02.Item\00.Weapon\00.Melee</Filter>
+    </ClCompile>
+    <ClCompile Include="CBow.cpp">
+      <Filter>소스 파일\02.Object\02.Item\00.Weapon\01.Bow</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>소스 파일\02.Object\02.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CEdit.cpp">
+      <Filter>소스 파일\01.Scene\03.Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="CWall.cpp">
+      <Filter>소스 파일\02.Object\04.Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMgr.cpp">
+      <Filter>소스 파일\07.Manager\09.CameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CUi.cpp">
+      <Filter>소스 파일\05.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventory.cpp">
+      <Filter>소스 파일\05.UI\01.Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="CUiMgr.cpp">
+      <Filter>소스 파일\07.Manager\10.UiMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>소스 파일\02.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>소스 파일\02.Object\01.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CSlime.cpp">
+      <Filter>소스 파일\02.Object\01.Monster\00.Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="CBoss_Slime.cpp">
+      <Filter>소스 파일\02.Object\01.Monster\01.Boss_Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="CSoundMgr.cpp">
+      <Filter>소스 파일\07.Manager\11.SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CWall_Item.cpp">
+      <Filter>소스 파일\02.Object\02.Item\01.Use\00.Wall_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CInvenCrafting.cpp">
+      <Filter>소스 파일\05.UI\03.Craftring\01.Crafting\00.InvenCrafting</Filter>
+    </ClCompile>
+    <ClCompile Include="CIronCrafting.cpp">
+      <Filter>소스 파일\05.UI\03.Craftring\01.Crafting\01.IronCrafting</Filter>
+    </ClCompile>
+    <ClCompile Include="CSlot.cpp">
+      <Filter>소스 파일\05.UI\04.Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="CCraftingSlot.cpp">
+      <Filter>소스 파일\05.UI\04.Slot\00.CraftringSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CArmor.cpp">
+      <Filter>소스 파일\02.Object\02.Item\02.Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="CEquip.cpp">
+      <Filter>소스 파일\05.UI\05.Equip</Filter>
+    </ClCompile>
+    <ClCompile Include="CLarva.cpp">
+      <Filter>소스 파일\02.Object\01.Monster\02.Larva</Filter>
+    </ClCompile>
+    <ClCompile Include="CBoss_Hive.cpp">
+      <Filter>소스 파일\02.Object\01.Monster\03.Boss_Hive</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectile.cpp">
+      <Filter>소스 파일\02.Object\03.Projectile\00.PlayerProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossAcidProjectile.cpp">
+      <Filter>소스 파일\02.Object\03.Projectile\01.BossAcidProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_HpBar.cpp">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_HpBar_Background.cpp">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossHpBar.cpp">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\01.Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossHPBarBackground.cpp">
+      <Filter>소스 파일\05.UI\02.Hp_Bar\01.Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>소스 파일\02.Object\06.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CCraftingTable.cpp">
+      <Filter>소스 파일\02.Object\05.Building\00.CraftingTable</Filter>
+    </ClCompile>
+    <ClCompile Include="CBoss_Core.cpp">
+      <Filter>소스 파일\02.Object\05.Building\01.Boss_Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CCoreEquip.cpp">
+      <Filter>소스 파일\05.UI\06.CoreEquip</Filter>
+    </ClCompile>
+    <ClCompile Include="CShadow.cpp">
+      <Filter>소스 파일\06.Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="CLarva_Egg.cpp">
+      <Filter>소스 파일\02.Object\01.Monster\04.Larva_Egg</Filter>
+    </ClCompile>
+    <ClCompile Include="CCookingPot.cpp">
+      <Filter>소스 파일\02.Object\05.Building\02.CookingPot</Filter>
+    </ClCompile>
+    <ClCompile Include="CCrafting.cpp">
+      <Filter>소스 파일\05.UI\03.Craftring</Filter>
+    </ClCompile>
+    <ClCompile Include="CCooking.cpp">
+      <Filter>소스 파일\05.UI\03.Craftring\02.Cooking</Filter>
+    </ClCompile>
+    <ClCompile Include="CMain_Core.cpp">
+      <Filter>소스 파일\02.Object\05.Building\03.Main_Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CHitDamage.cpp">
+      <Filter>소스 파일\02.Object\06.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CSlimeNPC.cpp">
+      <Filter>소스 파일\02.Object\07.NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="CDialogue.cpp">
+      <Filter>소스 파일\05.UI\07.NPC_Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="CButton.cpp">
+      <Filter>소스 파일\05.UI\07.NPC_Dialogue\00.Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CForge.cpp">
+      <Filter>소스 파일\02.Object\05.Building\04.Forge</Filter>
+    </ClCompile>
+    <ClCompile Include="CSmelting.cpp">
+      <Filter>소스 파일\05.UI\08.Smelting</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_Stat.cpp">
+      <Filter>소스 파일\05.UI\09.Player_Stat</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinimap.cpp">
+      <Filter>소스 파일\05.UI\10.Minimap</Filter>
+    </ClCompile>
+    <ClCompile Include="CClear.cpp">
+      <Filter>소스 파일\01.Scene\04.Clear</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinApi_CoreKeeper.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="WinApi_CoreKeeper.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

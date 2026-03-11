@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinApi_CoreKeeper", "WinApi_CoreKeeper\WinApi_CoreKeeper.vcxproj", "{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Debug|x64.ActiveCfg = Debug|x64
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Debug|x64.Build.0 = Debug|x64
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Debug|x86.ActiveCfg = Debug|Win32
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Debug|x86.Build.0 = Debug|Win32
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Release|x64.ActiveCfg = Release|x64
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Release|x64.Build.0 = Release|x64
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Release|x86.ActiveCfg = Release|Win32
+		{7EDFE1A3-6328-41AB-BA91-4F7F1002A966}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {219E236E-FFA9-416E-A145-E5B6019427E4}
+	EndGlobalSection
+EndGlobal
