@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Define.h"
 class CSoundMgr
 {
@@ -44,13 +44,13 @@ private:
 	void LoadSoundFile();
 
 private:
-	// »ç¿îµå ¸®¼Ò½º Á¤º¸¸¦ °®´Â °´Ã¼ 
+	// ì‚¬ìš´ë“œ ë¦¬ì†ŒìŠ¤ ì •ë³´ë¥¼ ê°–ëŠ” ê°ì²´ 
 	map<TCHAR*, FMOD_SOUND*> m_mapSound;
 
-	// FMOD_CHANNEL : Àç»ýÇÏ°í ÀÖ´Â »ç¿îµå¸¦ °ü¸®ÇÒ °´Ã¼ 
+	// FMOD_CHANNEL : ìž¬ìƒí•˜ê³  ìžˆëŠ” ì‚¬ìš´ë“œë¥¼ ê´€ë¦¬í•  ê°ì²´ 
 	FMOD_CHANNEL* m_pChannelArr[MAXCHANNEL];
 
-	// »ç¿îµå ,Ã¤³Î °´Ã¼ ¹× ÀåÄ¡¸¦ °ü¸®ÇÏ´Â °´Ã¼ 
+	// ì‚¬ìš´ë“œ ,ì±„ë„ ê°ì²´ ë° ìž¥ì¹˜ë¥¼ ê´€ë¦¬í•˜ëŠ” ê°ì²´ 
 	FMOD_SYSTEM* m_pSystem;
 };
 

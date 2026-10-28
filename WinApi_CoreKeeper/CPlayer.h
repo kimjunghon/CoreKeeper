@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CObj.h"
 #include "CUi.h"
 
@@ -49,35 +49,35 @@ private:
     void Check_Equip();
    
 private:
-    //¸®¼Ò½º
+    //ë¦¬ì†ŒìŠ¤
     HDC m_hLeftDC;
     HDC m_hRightDC;
 
-    //ÇÃ·¹ÀÌ¾î »óÅÂ
+    //í”Œë ˆì´ì–´ ìƒíƒœ
     OBJSTATE m_eCurState;
     OBJSTATE m_ePreState;
 
-    //ÇÃ·¹ÀÌ¾î ¹æÇâ
+    //í”Œë ˆì´ì–´ ë°©í–¥
     DIRECTION m_ePreDir;
 
-    //¾Ö´Ï¸ŞÀÌ¼Ç ÃÊ±âÈ­¿ë (tFrame ½ºÅ¸Æ®°¡ 0ÀÌ ¾Æ´Ï¶ó ÇÊ¿ä)
+    //ì• ë‹ˆë©”ì´ì…˜ ì´ˆê¸°í™”ìš© (tFrame ìŠ¤íƒ€íŠ¸ê°€ 0ì´ ì•„ë‹ˆë¼ í•„ìš”)
     int m_iFrameStart;
 
-    //°ø°İ½Ã ÇÁ·¹ÀÓ ÃÊ±âÈ­¿ë
+    //ê³µê²©ì‹œ í”„ë ˆì„ ì´ˆê¸°í™”ìš©
     int m_iAttackFrameStart;
     int m_iAttackFrameEnd;
 
-    //Á¶°Ç¿ë bool
+    //ì¡°ê±´ìš© bool
     bool m_bUiOpen;
     bool m_bCraftingOpen;
     bool m_bEdit;
     bool m_bAttacking;
     
-    //°ø°İ µô·¹ÀÌ
-    DWORD m_dwAttackTime;
-    DWORD m_dwAttackDelay;
+    //ê³µê²© ë”œë ˆì´
+    ULONGLONG m_dwAttackTime;
+    ULONGLONG m_dwAttackDelay;
 
-    //¹æÇâ Á¤ÇÏ±â¿ë ¸¶¿ì½º, °ø°İ½Ã »ç¿ëÇÒ ¾ÆÀÌÅÛ
+    //ë°©í–¥ ì •í•˜ê¸°ìš© ë§ˆìš°ìŠ¤, ê³µê²©ì‹œ ì‚¬ìš©í•  ì•„ì´í…œ
     CUi* m_pCursor;
     CUi* m_pHp_Bar;
     CObj* m_pEquipItem;
@@ -86,21 +86,21 @@ private:
     CObj* m_pEquipChest;
     CObj* m_pEquipPants;
 
-    //Hit Ã³¸®¿ë
+    //Hit ì²˜ë¦¬ìš©
     float m_fHitSpeed;
     DIRECTION m_eHitDir;
-    DWORD m_dwHitTime;
-    DWORD m_dwHitDelay;
+    ULONGLONG m_dwHitTime;
+    ULONGLONG m_dwHitDelay;
 
     bool m_bCanHit;
-    DWORD m_dwCanHitTime;
-    DWORD m_dwCanHitDelay;
+    ULONGLONG m_dwCanHitTime;
+    ULONGLONG m_dwCanHitDelay;
 
-    DWORD m_dwRecoveryTime;
-    DWORD m_dwRecoveryDelay;
+    ULONGLONG m_dwRecoveryTime;
+    ULONGLONG m_dwRecoveryDelay;
 
-    DWORD m_dwDeadingTime;
-    DWORD m_dwDeadingDelay;
+    ULONGLONG m_dwDeadingTime;
+    ULONGLONG m_dwDeadingDelay;
 
     bool m_bCanMining;
 
@@ -112,5 +112,8 @@ private:
     int m_iBasicMaxHp;
 
     bool m_bBossScene;
+
+    //ì¥ì°© ë°©ì–´êµ¬ ì¡°í•© (íˆ¬êµ¬ 1 / ìƒì˜ 2 / í•˜ì˜ 4), ë³€ê²½ ì‹œì—ë§Œ ì™¸í˜• ì´ë¯¸ì§€ ê°±ì‹ 
+    int m_iArmorMask;
 };
 

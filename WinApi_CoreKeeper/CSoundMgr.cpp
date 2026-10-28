@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CSoundMgr.h"
 
 CSoundMgr* CSoundMgr::m_pInstance = nullptr;
@@ -15,10 +15,10 @@ CSoundMgr::~CSoundMgr()
 
 void CSoundMgr::Initialize()
 {	
-	// »ç¿îµå¸¦ ´ã´çÇÏ´Â ´ëÇ¥°´Ã¼¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
+	// ì‚¬ìš´ë“œë¥¼ ë‹´ë‹¹í•˜ëŠ” ëŒ€í‘œê°ì²´ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 	FMOD_System_Create(&m_pSystem);
 
-	// 1. ½Ã½ºÅÛ Æ÷ÀÎÅÍ, 2. »ç¿ëÇÒ °¡»óÃ¤³Î ¼ö , ÃÊ±âÈ­ ¹æ½Ä) 
+	// 1. ì‹œìŠ¤í…œ í¬ì¸í„°, 2. ì‚¬ìš©í•  ê°€ìƒì±„ë„ ìˆ˜ , ì´ˆê¸°í™” ë°©ì‹) 
 	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
 
 	LoadSoundFile();
@@ -102,10 +102,10 @@ void CSoundMgr::SetChannelVolume(CHANNELID eID, float fVolume)
 
 void CSoundMgr::LoadSoundFile()
 {
-	// _finddata_t : <io.h>¿¡¼­ Á¦°øÇÏ¸ç ÆÄÀÏ Á¤º¸¸¦ ÀúÀåÇÏ´Â ±¸Á¶Ã¼
+	// _finddata_t : <io.h>ì—ì„œ ì œê³µí•˜ë©° íŒŒì¼ ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” êµ¬ì¡°ì²´
 	_finddata_t fd;
 
-	// _findfirst : <io.h>¿¡¼­ Á¦°øÇÏ¸ç »ç¿ëÀÚ°¡ ¼³Á¤ÇÑ °æ·Î ³»¿¡¼­ °¡Àå Ã¹ ¹øÂ° ÆÄÀÏÀ» Ã£´Â ÇÔ¼ö
+	// _findfirst : <io.h>ì—ì„œ ì œê³µí•˜ë©° ì‚¬ìš©ìê°€ ì„¤ì •í•œ ê²½ë¡œ ë‚´ì—ì„œ ê°€ì¥ ì²« ë²ˆì§¸ íŒŒì¼ì„ ì°¾ëŠ” í•¨ìˆ˜
 	long handle = _findfirst("../Sounds/*.*", &fd);
 
 	if (handle == -1)
@@ -113,7 +113,7 @@ void CSoundMgr::LoadSoundFile()
 
 	int iResult = 0;
 
-	char szCurPath[128] = "../Sounds/";	 // »ó´ë °æ·Î
+	char szCurPath[128] = "../Sounds/";	 // ìƒëŒ€ ê²½ë¡œ
 	char szFullPath[128] = "";
 
 	while (iResult != -1)
@@ -135,12 +135,12 @@ void CSoundMgr::LoadSoundFile()
 			TCHAR* pSoundKey = new TCHAR[iLength];
 			ZeroMemory(pSoundKey, sizeof(TCHAR) * iLength);
 
-			// ¾Æ½ºÅ° ÄÚµå ¹®ÀÚ¿­À» À¯´ÏÄÚµå ¹®ÀÚ¿­·Î º¯È¯½ÃÄÑÁÖ´Â ÇÔ¼ö
+			// ì•„ìŠ¤í‚¤ ì½”ë“œ ë¬¸ìì—´ì„ ìœ ë‹ˆì½”ë“œ ë¬¸ìì—´ë¡œ ë³€í™˜ì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
 			MultiByteToWideChar(CP_ACP, 0, fd.name, iLength, pSoundKey, iLength);
 
 			m_mapSound.emplace(pSoundKey, pSound);
 		}
-		//_findnext : <io.h>¿¡¼­ Á¦°øÇÏ¸ç ´ÙÀ½ À§Ä¡ÀÇ ÆÄÀÏÀ» Ã£´Â ÇÔ¼ö, ´õÀÌ»ó ¾ø´Ù¸é -1À» ¸®ÅÏ
+		//_findnext : <io.h>ì—ì„œ ì œê³µí•˜ë©° ë‹¤ìŒ ìœ„ì¹˜ì˜ íŒŒì¼ì„ ì°¾ëŠ” í•¨ìˆ˜, ë”ì´ìƒ ì—†ë‹¤ë©´ -1ì„ ë¦¬í„´
 		iResult = _findnext(handle, &fd);
 	}
 

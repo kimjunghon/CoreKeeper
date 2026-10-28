@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CBmpMgr.h"
 
 CBmpMgr* CBmpMgr::m_pInstance = nullptr;
@@ -53,28 +53,28 @@ void CBmpMgr::Load_Bmp()
 	Insert_Bmp(L"../Resource/ClearScene.bmp", L"ClearScene");
 	
 	
-	//Player ±âº»
+	//Player ê¸°ë³¸
 	Insert_Bmp(L"../Resource/Player/NoEquip_Miner_R.bmp", L"NoEquip_Miner_R");
 	Insert_Bmp(L"../Resource/Player/NoEquip_Miner_L.bmp", L"NoEquip_Miner_L");
-	//Player Åõ±¸
+	//Player íˆ¬êµ¬
 	Insert_Bmp(L"../Resource/Player/Iron_Helm_Miner_R.bmp", L"Iron_Helm_Miner_R");
 	Insert_Bmp(L"../Resource/Player/Iron_Helm_Miner_L.bmp", L"Iron_Helm_Miner_L");
-	//Player Åõ±¸_»óÀÇ
+	//Player íˆ¬êµ¬_ìƒì˜
 	Insert_Bmp(L"../Resource/Player/Iron_HelmChest_Miner_L.bmp", L"Iron_HelmChest_Miner_L");
 	Insert_Bmp(L"../Resource/Player/Iron_HelmChest_Miner_R.bmp", L"Iron_HelmChest_Miner_R");
-	//Player Åõ±¸_ÇÏÀÇ
+	//Player íˆ¬êµ¬_í•˜ì˜
 	Insert_Bmp(L"../Resource/Player/Iron_HelmPants_Miner_L.bmp", L"Iron_HelmPants_Miner_L");
 	Insert_Bmp(L"../Resource/Player/Iron_HelmPants_Miner_R.bmp", L"Iron_HelmPants_Miner_R");
-	//Player »óÀÇ
+	//Player ìƒì˜
 	Insert_Bmp(L"../Resource/Player/Iron_Chest_Miner_L.bmp", L"Iron_Chest_Miner_L");
 	Insert_Bmp(L"../Resource/Player/Iron_Chest_Miner_R.bmp", L"Iron_Chest_Miner_R");
-	//Player »óÀÇ_ÇÏÀÇ
+	//Player ìƒì˜_í•˜ì˜
 	Insert_Bmp(L"../Resource/Player/Iron_ChestPants_Miner_L.bmp", L"Iron_ChestPants_Miner_L");
 	Insert_Bmp(L"../Resource/Player/Iron_ChestPants_Miner_R.bmp", L"Iron_ChestPants_Miner_R");
-	//Player ÇÏÀÇ
+	//Player í•˜ì˜
 	Insert_Bmp(L"../Resource/Player/Iron_Pants_Miner_L.bmp", L"Iron_Pants_Miner_L");
 	Insert_Bmp(L"../Resource/Player/Iron_Pants_Miner_R.bmp", L"Iron_Pants_Miner_R");
-	//Player Åõ±¸_»óÀÇ_ÇÏÀÇ
+	//Player íˆ¬êµ¬_ìƒì˜_í•˜ì˜
 	Insert_Bmp(L"../Resource/Player/Iron_Full_Miner_L.bmp", L"Iron_Full_Miner_L");
 	Insert_Bmp(L"../Resource/Player/Iron_Full_Miner_R.bmp", L"Iron_Full_Miner_R");
 

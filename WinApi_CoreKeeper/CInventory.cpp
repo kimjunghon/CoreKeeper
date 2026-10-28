@@ -309,6 +309,27 @@ void CInventory::DecreaseItem(int _iItemCode, int _iItemCount)
 	}
 }
 
+void CInventory::Collect_ItemCount(map<int, int>& _mapItemCount)
+{
+	_mapItemCount.clear();
+
+	for (auto& vecSlot : m_vecSlot)
+	{
+		CItem* pSlotItem = static_cast<CItem*>(static_cast<CSlot*>(vecSlot)->Get_Item());
+
+		if (pSlotItem)
+			_mapItemCount[pSlotItem->Get_ItemCode()] += pSlotItem->Get_ItemCount();
+	}
+
+	for (auto& vecSlot : m_vecQuickSlot)
+	{
+		CItem* pSlotItem = static_cast<CItem*>(static_cast<CSlot*>(vecSlot)->Get_Item());
+
+		if (pSlotItem)
+			_mapItemCount[pSlotItem->Get_ItemCode()] += pSlotItem->Get_ItemCount();
+	}
+}
+
 int CInventory::Check_ItemCount(int _iItemCode)
 {
 	int iTotal(0);

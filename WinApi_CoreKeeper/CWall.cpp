@@ -80,7 +80,7 @@ void CWall::Render(HDC _hDC)
 		}
 
 #ifdef _DEBUG
-		float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
+	/*	float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
 		float fCenterY = m_tInfo.fY - iCameraY + m_fDistanceY;
 
 		float	fRadiusX = m_tCollisionInfo.fCX * 0.5f;
@@ -93,7 +93,7 @@ void CWall::Render(HDC _hDC)
 
 		FrameRect(_hDC, &rc, hBrush);
 
-		DeleteObject(hBrush);
+		DeleteObject(hBrush);*/
 #endif
 	}
 }

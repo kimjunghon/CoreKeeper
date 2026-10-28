@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include "Define.h"
 
 
@@ -20,17 +20,17 @@ public:
 
 public:
 	
-	//∑ª¥ı∏µ
+	//Î†åÎçîÎßÅ
 	void		Update_Rect();
 	void		Check_Render();
 	void		Set_Render(bool _bRender) { m_bRender = _bRender; }
 	bool		IsRender() { return m_bRender; }
 	const BMPINFO& Get_BmpInfo() { return m_tBmpInfo; }
 
-	//ΩΩ∑‘ø° ±◊∑¡¡Ÿ BMP
+	//Ïä¨Î°ØÏóê Í∑∏Î†§Ï§Ñ BMP
 	HDC* Get_SlotDC() { return &m_hSlotDC; }
 
-	//Obj ¡§∫∏
+	//Obj Ï†ïÎ≥¥
 	const RECT& Get_Rect() { return m_tRect; }
 	const INFO& Get_Info() { return m_tInfo; }
 	const INFO& Get_CollisionInfo() { return m_tCollisionInfo; }
@@ -43,11 +43,11 @@ public:
 	bool		Is_Dead() { return m_bDead; }
 	void		Set_Speed(float _fSpeed) { m_fSpeed = _fSpeed; }
 
-	//∞¯∞›
+	//Í≥µÍ≤©
 	bool		IsAttack() { return m_bAttack; }
 	void		SetAttack(bool _bAttack) { m_bAttack = _bAttack; }
 	
-	//√Êµπ √≥∏ÆøÎ
+	//Ï∂©Îèå Ï≤òÎ¶¨Ïö©
 	void		Create_CollisionRect();
 	void		Update_CollisionRect();
 	const vector<INFO>& Get_VecCollisionInfo() { return m_vecCollisionInfo; }
@@ -80,7 +80,7 @@ protected:
 
 	float		m_fAtkPower;
 	float		m_fDefPower;
-	float		m_fMiningPower; //√§±º«««ÿ
+	float		m_fMiningPower; //Ï±ÑÍµ¥ÌîºÌï¥
 	float		m_fSpeed;
 	
 	float		m_fAngle;
@@ -91,7 +91,7 @@ protected:
 	bool		m_bAttack;
 
 	
-	//√Êµπ √≥∏ÆøÎ
+	//Ï∂©Îèå Ï≤òÎ¶¨Ïö©
 	INFO		m_tCollisionInfo;
 	vector<INFO> m_vecCollisionInfo;
 	float m_fDistanceX;

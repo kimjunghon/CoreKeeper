@@ -16,7 +16,8 @@ public:
     void Release() override;
 
 public:
-    bool IsCrafting();
+    bool IsCrafting() { return m_bCrafting; }
+    void Refresh_Crafting(const map<int, int>& _mapItemCount);
     CObj* Crafting();
 
     void Set_CraftingItem(int _iCraftingItemCode);

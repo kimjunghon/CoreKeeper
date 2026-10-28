@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CMonster.h"
 class CSlime :
     public CMonster
@@ -24,7 +24,7 @@ private:
     bool CanAttack();
 
 private:
-    //Hit Ã³¸®¿ë
+    //Hit ì²˜ë¦¬ìš©
     float m_fHitSpeed;
     DIRECTION m_eHitDir;
     DWORD m_dwHitTime;

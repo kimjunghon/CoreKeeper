@@ -18,6 +18,7 @@ public:
     void Move_Frame() override;
 
     void Set_MeleeItem(int _iItemCode);
+
 private:
     void Set_Bmp();
 

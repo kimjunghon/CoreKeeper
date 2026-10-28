@@ -113,22 +113,13 @@ void CBow::Use()
 	
 	m_bAttack = true;
 
-	CObj* pProjectile = nullptr;
+	if (m_eWeaponGrade == WG_END)
+		return;
 
-	switch (m_eWeaponGrade)
-	{
-	case WG_WOOD:
-		pProjectile = CAbstractFactory<CProjectile>::Create(m_tInfo.fX, m_tInfo.fY, m_fAngle);
-		pProjectile->Set_AtkPower(CObjMgr::Get_Instance()->Get_Player()->Get_AtkPower());
-		dynamic_cast<CProjectile*>(pProjectile)->Set_Projectile(m_iItemCode);
-		break;
-	case WG_IRON:
-		pProjectile = CAbstractFactory<CProjectile>::Create(m_tInfo.fX, m_tInfo.fY, m_fAngle);
-		pProjectile->Set_AtkPower(CObjMgr::Get_Instance()->Get_Player()->Get_AtkPower());
-		dynamic_cast<CProjectile*>(pProjectile)->Set_Projectile(m_iItemCode);
-		break;
-	}
-	
+	CProjectile* pProjectile = static_cast<CProjectile*>(CAbstractFactory<CProjectile>::Create(m_tInfo.fX, m_tInfo.fY, m_fAngle));
+	pProjectile->Set_AtkPower(CObjMgr::Get_Instance()->Get_Player()->Get_AtkPower());
+	pProjectile->Set_Projectile(m_iItemCode);
+
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PROJECTILE, pProjectile);
 
 	CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);

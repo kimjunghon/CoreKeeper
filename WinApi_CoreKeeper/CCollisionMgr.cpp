@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CCollisionMgr.h"
 #include "CCameraMgr.h"
 #include "CObjMgr.h"
@@ -220,27 +220,27 @@ void CCollisionMgr::Obj_Tile_Collision_RectEx(CObj* _pObj)
 			{
 				if (fWidth > fHeight)
 				{
-					// »ó Ãæµ¹
+					// ìƒ ì¶©ëŒ
 					if (vecCollision.fY < (*m_pVecTile)[iIndex]->Get_Info()->fY)
 					{
 						_pObj->Set_PosY(-fHeight);
 					}
-					// ÇÏ Ãæµ¹
+					// í•˜ ì¶©ëŒ
 					else
 					{
 						_pObj->Set_PosY(fHeight);
 					}
 				}
-				// ÁÂ ¿ì Ãæµ¹
+				// ì¢Œ ìš° ì¶©ëŒ
 				else
 				{
-					// ÁÂ Ãæµ¹
+					// ì¢Œ ì¶©ëŒ
 					if (vecCollision.fX < (*m_pVecTile)[iIndex]->Get_Info()->fX)
 					{
 						_pObj->Set_PosX(-fWidth);
 					}
 
-					// ¿ì Ãæµ¹
+					// ìš° ì¶©ëŒ
 					else
 					{
 						_pObj->Set_PosX(fWidth);
@@ -313,27 +313,27 @@ void CCollisionMgr::Obj_Wall_Collision_RectEx(CObj* _pObj)
 				{
 					if (fWidth > fHeight)
 					{
-						// »ó Ãæµ¹
+						// ìƒ ì¶©ëŒ
 						if (vecCollision.fY < (*m_pVecWall)[iIndex]->Get_Info().fY)
 						{
 							_pObj->Set_PosY(-fHeight);
 						}
-						// ÇÏ Ãæµ¹
+						// í•˜ ì¶©ëŒ
 						else
 						{
 							_pObj->Set_PosY(fHeight);
 						}
 					}
-					// ÁÂ ¿ì Ãæµ¹
+					// ì¢Œ ìš° ì¶©ëŒ
 					else
 					{
-						// ÁÂ Ãæµ¹
+						// ì¢Œ ì¶©ëŒ
 						if (vecCollision.fX < (*m_pVecWall)[iIndex]->Get_Info().fX)
 						{
 							_pObj->Set_PosX(-fWidth);
 						}
 
-						// ¿ì Ãæµ¹
+						// ìš° ì¶©ëŒ
 						else
 						{
 							_pObj->Set_PosX(fWidth);
@@ -653,7 +653,7 @@ void CCollisionMgr::Mouse_Slot_Collision_Rect()
 						pSlot->Set_Item(pTemp);
 						
 					}	
-				} //¸¶¿ì½º ¿À¹ö
+				} //ë§ˆìš°ìŠ¤ ì˜¤ë²„
 				else
 				{
 					if (i == SLOT_CRAFTING)
@@ -762,7 +762,7 @@ void CCollisionMgr::Obj_Idle_Collision_RectEx(CObj* _pDst, CObj* _pSrc)
 							_pSrc->Set_PosX(fWidth);
 						}
 
-						// ¿ì Ãæµ¹
+						// ìš° ì¶©ëŒ
 						else
 						{
 							_pSrc->Set_PosX(-fWidth);
@@ -803,29 +803,29 @@ void CCollisionMgr::Obj_Attack_Collision_RectEx(CObj* _pDst, CObj* _pSrc)
 				fAtkPower = _pSrc->Get_AtkPower();
 				fMass = _pSrc->Get_Mass();
 				fSpeed = _pSrc->Get_Speed();
-				// »ó Ãæµ¹
+				// ìƒ ì¶©ëŒ
 				if (fWidth > fHeight)
 				{
 					if (vecDstCollision.fY < vecSrcCollision.fY)
 					{
 						eDirection = DIR_UP;
 					}
-					// ÇÏ Ãæµ¹
+					// í•˜ ì¶©ëŒ
 					else
 					{
 						eDirection = DIR_DOWN;
 					}
 				}
-				// ÁÂ ¿ì Ãæµ¹
+				// ì¢Œ ìš° ì¶©ëŒ
 				else
 				{
-					// ÁÂ Ãæµ¹
+					// ì¢Œ ì¶©ëŒ
 					if (vecDstCollision.fX < vecSrcCollision.fX)
 					{
 						eDirection = DIR_RIGHT;
 					}
 				
-					// ¿ì Ãæµ¹
+					// ìš° ì¶©ëŒ
 					else
 					{
 						eDirection = DIR_LEFT;

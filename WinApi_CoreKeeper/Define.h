@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 #define			VK_MAX			0xff
 
@@ -151,8 +151,8 @@ typedef struct tagInfo
 {
 	float			fX;
 	float			fY;
-	float			fCX;	// ∞°∑Œ ±Ê¿Ã
-	float			fCY;	// ºº∑Œ ±Ê¿Ã
+	float			fCX;	// Í∞ÄÎ°ú Í∏∏Ïù¥
+	float			fCY;	// ÏÑ∏Î°ú Í∏∏Ïù¥
 
 }INFO;
 

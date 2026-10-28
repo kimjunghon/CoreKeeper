@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CPlayer.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
@@ -30,7 +30,7 @@ CPlayer::CPlayer() :
 	m_bEdit(false),
 	m_pCursor(nullptr),
 	m_pEquipItem(nullptr),
-	m_dwAttackTime(GetTickCount()),
+	m_dwAttackTime(GetTickCount64()),
 	m_dwAttackDelay(0),
 	m_hLeftDC(nullptr),
 	m_hRightDC(nullptr),
@@ -84,7 +84,7 @@ void CPlayer::Initialize()
 	m_dwHitDelay = 200;
 	m_dwCanHitDelay = 600;
 
-	m_dwRecoveryTime = GetTickCount();
+	m_dwRecoveryTime = GetTickCount64();
 	m_dwRecoveryDelay = 5000;
 
 	m_tFrame.iFrameStart = 0;
@@ -107,6 +107,7 @@ void CPlayer::Initialize()
 
 	m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"NoEquip_Miner_L");
 	m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"NoEquip_Miner_R");
+	m_iArmorMask = -1;
 
 	m_pCursor = CUiMgr::Get_Instance()->Get_Cursor();
 	__super::Create_CollisionRect();
@@ -134,7 +135,7 @@ int CPlayer::Update()
 			dynamic_cast<CPlayer_HpBar*>(m_pHp_Bar)->Set_HP(m_iHp, m_iMaxHp);
 		}
 
-		if (m_dwDeadingTime + m_dwDeadingDelay < GetTickCount())
+		if (m_dwDeadingTime + m_dwDeadingDelay < GetTickCount64())
 		{
 			m_bDeading = false;
 			m_tInfo.fX = 1200.f;
@@ -175,25 +176,25 @@ int CPlayer::Update()
 			break;
 		}
 
-		if (m_dwHitTime + m_dwHitDelay < GetTickCount())
+		if (m_dwHitTime + m_dwHitDelay < GetTickCount64())
 		{
 			m_bHit = false;
-			m_dwCanHitTime = GetTickCount();
+			m_dwCanHitTime = GetTickCount64();
 		}
 	}
 
-	if (!m_bHit && m_dwCanHitTime + m_dwCanHitDelay < GetTickCount())
+	if (!m_bHit && m_dwCanHitTime + m_dwCanHitDelay < GetTickCount64())
 	{
 		m_bCanHit = true;
 	}
 
-	if (m_dwRecoveryTime + m_dwRecoveryDelay < GetTickCount())
+	if (m_dwRecoveryTime + m_dwRecoveryDelay < GetTickCount64())
 	{
 		m_iHp += 5;
 		if (m_iHp >= m_iMaxHp)
 			m_iHp = m_iMaxHp;
 
-		m_dwRecoveryTime = GetTickCount();
+		m_dwRecoveryTime = GetTickCount64();
 	}
 
 	__super::Update_Rect();
@@ -245,20 +246,20 @@ void CPlayer::Render(HDC _hDC)
 
 
 #ifdef _DEBUG
-	float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
-	float fCenterY = m_tInfo.fY - iCameraY + m_fDistanceY;
+	//float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
+	//float fCenterY = m_tInfo.fY - iCameraY + m_fDistanceY;
 
-	float	fRadiusX = m_tCollisionInfo.fCX * 0.5f;
-	float	fRadiusY = m_tCollisionInfo.fCY * 0.5f;
+	//float	fRadiusX = m_tCollisionInfo.fCX * 0.5f;
+	//float	fRadiusY = m_tCollisionInfo.fCY * 0.5f;
 
-	RECT rc = { fCenterX - fRadiusX, fCenterY - fRadiusY,
-		fCenterX + fRadiusX, fCenterY + fRadiusY };
+	//RECT rc = { fCenterX - fRadiusX, fCenterY - fRadiusY,
+	//	fCenterX + fRadiusX, fCenterY + fRadiusY };
 
-	HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
+	//HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
 
-	FrameRect(_hDC, &rc, hBrush);
+	//FrameRect(_hDC, &rc, hBrush);
 
-	DeleteObject(hBrush);
+	//DeleteObject(hBrush);
 #endif
 }
 
@@ -417,14 +418,15 @@ void CPlayer::Key_Input()
 			if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
 			{
 
-				if (!m_bAttacking && m_dwAttackTime + m_dwAttackDelay < GetTickCount())
+				if (!m_bAttacking && m_dwAttackTime + m_dwAttackDelay < GetTickCount64())
 				{
 					m_eCurState = OS_ATTACK;
 
-					if (m_pEquipItem != nullptr)
+					CItem* Equip = dynamic_cast<CItem*>(m_pEquipItem);
+					if (Equip != nullptr)
 					{
-						dynamic_cast<CItem*>(m_pEquipItem)->Use();
-						if (m_pEquipItem->Is_Dead())
+						Equip->Use();
+						if (Equip->Is_Dead())
 							m_pEquipItem = nullptr;
 					}
 					else
@@ -597,7 +599,7 @@ void CPlayer::Move_Frame()
 
 			if (m_iAttackFrameStart > m_iAttackFrameEnd)
 			{
-				m_dwAttackTime = GetTickCount();
+				m_dwAttackTime = GetTickCount64();
 				m_iAttackFrameStart = 0;
 				m_bAttacking = false;
 				m_bAttack = false;
@@ -813,49 +815,33 @@ void CPlayer::Check_Equip()
 
 	m_fDefPower = fDef + m_fBasicDefPower;
 	m_iMaxHp = iMaxHp + m_iBasicMaxHp;
+
+	if (m_iHp > m_iMaxHp)
+		m_iHp = m_iMaxHp;
 	
-	//BMP
-	if (!m_pEquipHelm && !m_pEquipChest && !m_pEquipPants)
+	//BMP : 방어구 조합을 비트로 묶어 외형 이미지 테이블에서 선택
+	static const TCHAR* szArmorBmpKey[8][2] =
 	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"NoEquip_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"NoEquip_Miner_R");
-	}
-	else if (m_pEquipHelm && !m_pEquipChest && !m_pEquipPants)
+		{ L"NoEquip_Miner_L",         L"NoEquip_Miner_R" },         // 000 : 미착용
+		{ L"Iron_Helm_Miner_L",       L"Iron_Helm_Miner_R" },       // 001 : 투구
+		{ L"Iron_Chest_Miner_L",      L"Iron_Chest_Miner_R" },      // 010 : 상의
+		{ L"Iron_HelmChest_Miner_L",  L"Iron_HelmChest_Miner_R" },  // 011 : 투구 + 상의
+		{ L"Iron_Pants_Miner_L",      L"Iron_Pants_Miner_R" },      // 100 : 하의
+		{ L"Iron_HelmPants_Miner_L",  L"Iron_HelmPants_Miner_R" },  // 101 : 투구 + 하의
+		{ L"Iron_ChestPants_Miner_L", L"Iron_ChestPants_Miner_R" }, // 110 : 상의 + 하의
+		{ L"Iron_Full_Miner_L",       L"Iron_Full_Miner_R" },       // 111 : 전체
+	};
+
+	int iArmorMask = (m_pEquipHelm ? 1 : 0) | (m_pEquipChest ? 2 : 0) | (m_pEquipPants ? 4 : 0);
+
+	// 방어구 조합이 바뀐 경우에만 이미지 검색
+	if (iArmorMask != m_iArmorMask)
 	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Helm_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Helm_Miner_R");
+		m_iArmorMask = iArmorMask;
+		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(szArmorBmpKey[iArmorMask][0]);
+		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(szArmorBmpKey[iArmorMask][1]);
+		m_hSlotDC = m_hRightDC;
 	}
-	else if (!m_pEquipHelm && m_pEquipChest && !m_pEquipPants)
-	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Chest_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Chest_Miner_R");
-	}
-	else if (!m_pEquipHelm && !m_pEquipChest && m_pEquipPants)
-	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Pants_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Pants_Miner_R");
-	}
-	else if (m_pEquipHelm && m_pEquipChest && !m_pEquipPants)
-	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_HelmChest_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_HelmChest_Miner_R");
-	}
-	else if (m_pEquipHelm && !m_pEquipChest && m_pEquipPants)
-	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_HelmPants_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_HelmPants_Miner_R");
-	}
-	else if (!m_pEquipHelm && m_pEquipChest && m_pEquipPants)
-	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_ChestPants_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_ChestPants_Miner_R");
-	}
-	else if (m_pEquipHelm && m_pEquipChest && m_pEquipPants)
-	{
-		m_hLeftDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Full_Miner_L");
-		m_hRightDC = CBmpMgr::Get_Instance()->Find_Image(L"Iron_Full_Miner_R");
-	}
-	m_hSlotDC = m_hRightDC;
 }
 
 
@@ -904,7 +890,7 @@ void CPlayer::Hit(float _fAtkDmg, float _fMass, float _fSpeed, DIRECTION _eDir)
 	if(m_bCanHit && !m_bDeading)
 	{
 		CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		m_dwRecoveryTime = GetTickCount();
+		m_dwRecoveryTime = GetTickCount64();
 
 		float AtkDmg = _fAtkDmg - m_fDefPower;
 
@@ -935,7 +921,7 @@ void CPlayer::Hit(float _fAtkDmg, float _fMass, float _fSpeed, DIRECTION _eDir)
 		if (AtkDmg <= 0.f)
 		{
 			m_bCanHit = false;
-			m_dwCanHitTime = GetTickCount();
+			m_dwCanHitTime = GetTickCount64();
 		}
 		else
 		{
@@ -950,7 +936,7 @@ void CPlayer::Hit(float _fAtkDmg, float _fMass, float _fSpeed, DIRECTION _eDir)
 				dynamic_cast<CEffect*>(pEffect)->Set_Effect(EFFECT_POTAL);
 				CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, pEffect);
 				m_bDeading = true;
-				m_dwDeadingTime = GetTickCount();
+				m_dwDeadingTime = GetTickCount64();
 				m_hObjDC = m_hRightDC;
 				m_tFrame.iFrameStart = 6;
 				m_tFrame.iMotion = 5;
@@ -961,7 +947,7 @@ void CPlayer::Hit(float _fAtkDmg, float _fMass, float _fSpeed, DIRECTION _eDir)
 			m_eHitDir = _eDir;
 			m_bHit = true;
 			m_bCanHit = false;
-			m_dwHitTime = GetTickCount();
+			m_dwHitTime = GetTickCount64();
 		}
 	}
 

@@ -148,20 +148,20 @@ void CBoss_Core::Render(HDC _hDC)
 		m_hObjDC, (int)m_tBmpInfo.fCX * m_tFrame.iFrameStart, 0, (int)m_tBmpInfo.fCX, (int)m_tBmpInfo.fCY, RGB(255, 255, 255));
 
 #ifdef _DEBUG
-	float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
-	float fCenterY = m_tInfo.fY - iCameraY + m_fDistanceY - 20.f;
+	//float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
+	//float fCenterY = m_tInfo.fY - iCameraY + m_fDistanceY - 20.f;
 
-	float	fRadiusX = m_tCollisionInfo.fCX * 0.5f;
-	float	fRadiusY = m_tCollisionInfo.fCY * 0.5f;
+	//float	fRadiusX = m_tCollisionInfo.fCX * 0.5f;
+	//float	fRadiusY = m_tCollisionInfo.fCY * 0.5f;
 
-	RECT rc = { fCenterX - fRadiusX, fCenterY - fRadiusY,
-		fCenterX + fRadiusX, fCenterY + fRadiusY };
+	//RECT rc = { fCenterX - fRadiusX, fCenterY - fRadiusY,
+	//	fCenterX + fRadiusX, fCenterY + fRadiusY };
 
-	HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
+	//HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
 
-	FrameRect(_hDC, &rc, hBrush);
+	//FrameRect(_hDC, &rc, hBrush);
 
-	DeleteObject(hBrush);
+	//DeleteObject(hBrush);
 #endif
 }
 

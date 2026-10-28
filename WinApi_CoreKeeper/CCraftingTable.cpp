@@ -29,7 +29,6 @@ void CCraftingTable::Initialize()
 	m_eRenderID = RENDER_OBJECT;
 	
 	m_hObjDC = CBmpMgr::Get_Instance()->Find_Image(L"CraftingTable");
-//	m_hSlotDC;
 
 	m_tCollisionInfo.fCX = 40.f;
 	m_tCollisionInfo.fCY = 40.f;
@@ -84,7 +83,7 @@ void CCraftingTable::Render(HDC _hDC)
 		m_hObjDC, 0, 0, (int)m_tBmpInfo.fCX, (int)m_tBmpInfo.fCY, RGB(255, 255, 255));
 
 #ifdef _DEBUG
-	float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
+	/*float fCenterX = m_tInfo.fX - iCameraX + m_fDistanceX;
 	float fCenterY = m_tInfo.fY - iCameraY + m_fDistanceY;
 
 	float	fRadiusX = m_tCollisionInfo.fCX * 0.5f;
@@ -97,7 +96,7 @@ void CCraftingTable::Render(HDC _hDC)
 
 	FrameRect(_hDC, &rc, hBrush);
 
-	DeleteObject(hBrush);
+	DeleteObject(hBrush);*/
 #endif
 }
 

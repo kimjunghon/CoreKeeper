@@ -1,4 +1,4 @@
-#include "pch.h"
+Ôªø#include "pch.h"
 #include "CWall.h"
 #include "CPlayer.h"
 #include "CObjMgr.h"
@@ -222,7 +222,7 @@ void CObjMgr::Move_Wall_Roof_Frame(int _iIndex)
 
 	int dX[4] = { 0, 1, 0, -1 };
 	int dY[4] = { 1, 0, -1, 0 };
-	int dZ[4] = { 0,0,0,0 }; //«œ, øÏ, ªÛ, ¡¬
+	int dZ[4] = { 0,0,0,0 }; //Ìïò, Ïö∞, ÏÉÅ, Ï¢å
 	int Dir = 0;
 	int iIndex = 0;
 
@@ -347,7 +347,7 @@ void CObjMgr::Save_Player()
 	
 	CloseHandle(hFile);
 
-	MessageBox(g_hWnd, L"Player Save", L"º∫∞¯", MB_OK);
+	MessageBox(g_hWnd, L"Player Save", L"ÏÑ±Í≥µ", MB_OK);
 }
 
 void CObjMgr::Load_Player()
@@ -394,7 +394,7 @@ void CObjMgr::Save_Wall()
 	}
 	CloseHandle(hFile);
 
-	MessageBox(g_hWnd, L"Wall Save", L"º∫∞¯", MB_OK);
+	MessageBox(g_hWnd, L"Wall Save", L"ÏÑ±Í≥µ", MB_OK);
 }
 
 void CObjMgr::Save_Monster()
@@ -417,7 +417,7 @@ void CObjMgr::Save_Monster()
 
 	CloseHandle(hFile);
 
-	MessageBox(g_hWnd, L"Player Save", L"º∫∞¯", MB_OK);
+	MessageBox(g_hWnd, L"Player Save", L"ÏÑ±Í≥µ", MB_OK);
 }
 
 void CObjMgr::Load_Wall()

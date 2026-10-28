@@ -24,6 +24,7 @@ public:
 	bool Check_Crafting(int _iItemCode, int _iItemCount);
 	void DecreaseItem(int _iItemCode, int _iItemCount);
 	int Check_ItemCount(int _iItemCode);
+	void Collect_ItemCount(map<int, int>& _mapItemCount);
 
 private:
 	vector<CUi*> m_vecQuickSlot;

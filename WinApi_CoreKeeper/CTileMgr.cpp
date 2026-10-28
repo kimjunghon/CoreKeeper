@@ -1,4 +1,4 @@
-#include "pch.h"
+О╩©#include "pch.h"
 #include "CTileMgr.h"
 #include "CBmpMgr.h"
 #include "CAbstractFactory.h"
@@ -183,7 +183,7 @@ void CTileMgr::Move_Frame(int _iIndex)
 
 	int dX[4] = { 0, 1, 0, -1 };
 	int dY[4] = { 1, 0, -1, 0 };
-	int dZ[4] = { 0,0,0,0}; //го, ©Л, ╩С, аб
+	int dZ[4] = { 0,0,0,0}; //М∙≤, Л ╟, Л┐│, Л╒▄
 	int Dir = 0;
 	int iIndex = 0;
 

@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "CCrafting.h"
+#include "CCraftingSlot.h"
+#include "CUiMgr.h"
+#include "CInventory.h"
 
 
 CCrafting::CCrafting()
@@ -21,8 +24,13 @@ void CCrafting::Update()
 	if (m_bOpen)
 	{
 		m_bRender = true;
+
+		map<int, int> mapItemCount;
+		static_cast<CInventory*>(CUiMgr::Get_Instance()->Get_PlayerInventory())->Collect_ItemCount(mapItemCount);
+
 		for (auto& vecSlot : m_vecCraftingSlot)
 		{
+			static_cast<CCraftingSlot*>(vecSlot)->Refresh_Crafting(mapItemCount);
 			vecSlot->Update();
 			vecSlot->Set_Render(m_bRender);
 		}

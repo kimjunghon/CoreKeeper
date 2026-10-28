@@ -37,11 +37,6 @@ void CCraftingSlot::Initialize()
 
 void CCraftingSlot::Update()
 {
-	if (IsCrafting())
-		m_bCrafting = true;
-	else
-		m_bCrafting = false;
-
 	__super::Update_Rect();
 }
 
@@ -68,9 +63,11 @@ void CCraftingSlot::Release()
 {
 }
 
-bool CCraftingSlot::IsCrafting()
+void CCraftingSlot::Refresh_Crafting(const map<int, int>& _mapItemCount)
 {
-	return 	dynamic_cast<CInventory*>(CUiMgr::Get_Instance()->Get_PlayerInventory())->Check_Crafting(m_iNeedItemCode, m_iNeedItemCount);
+	auto iter = _mapItemCount.find(m_iNeedItemCode);
+
+	m_bCrafting = (iter != _mapItemCount.end()) && (iter->second >= m_iNeedItemCount);
 }
 
 CObj* CCraftingSlot::Crafting()
