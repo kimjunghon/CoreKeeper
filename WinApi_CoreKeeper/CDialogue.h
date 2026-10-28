@@ -19,7 +19,7 @@ public:
     void Set_State(DIALOGUESTATE _eDialogueState) { m_eCurDialogueState = _eDialogueState; }
     int  QuestFrame();
 private:
-    bool Check_Quest();
+    void Set_Quest(int _iQuestNumber);
     void Quest_Clear();
     void Change_State();
 
@@ -27,6 +27,7 @@ private:
     int m_iQuestNumber;
     int m_iQuestItemCode;
     int m_iQuestItemCount;
+    int m_iQuestItemHave;
 
     bool m_bQuest;
     bool m_bQuesting;
@@ -43,5 +44,7 @@ private:
     HDC m_hFailDC;
     HDC m_hTextDC;
     HDC m_hHelpDC;
+    HDC m_hHelpClearDC;
+    HDC m_hFontDC;
 };
 

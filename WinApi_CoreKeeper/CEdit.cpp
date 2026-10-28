@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CEdit.h"
 #include "CTileMgr.h"
 #include "CObjMgr.h"
@@ -13,6 +13,32 @@
 #include "CBoss_Slime.h"
 #include "CLarva.h"
 #include "CBoss_Hive.h"
+
+namespace
+{
+	// 마우스 커서 위치를 카메라 위치를 더한 월드 좌표로 변환
+	POINT Get_MouseWorldPos()
+	{
+		POINT	ptMouse{};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(g_hWnd, &ptMouse);
+
+		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
+		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
+
+		return ptMouse;
+	}
+
+	// 편집 모드로 몬스터를 생성해 배치
+	template<typename T>
+	void Place_Monster(const POINT& _ptMouse)
+	{
+		CObj* pMonster = CAbstractFactory<T>::Create((float)_ptMouse.x, (float)_ptMouse.y, 0.f);
+		static_cast<CMonster*>(pMonster)->Set_Edit(true);
+
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pMonster);
+	}
+}
 
 CEdit::CEdit() :
 	m_eTileID(TILE_END),
@@ -105,120 +131,34 @@ void CEdit::Key_Input()
 	else if (CKeyMgr::Get_Instance()->Key_Down('5'))
 		m_eWallID = WALL_NULL;
 
+	POINT ptMouse = Get_MouseWorldPos();
+
+	// 좌클릭 : 타일 배치
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
 		CTileMgr::Get_Instance()->Change_Tile(ptMouse, m_eTileID);
-	}
 
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RBUTTON))
+	// 우클릭 : 벽 배치 (편집용 빈 타일 위에는 배치하지 않음)
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RBUTTON) && CTileMgr::Get_Instance()->Check_Tile(ptMouse))
+		CObjMgr::Get_Instance()->Change_Wall(ptMouse, m_eWallID);
+
+	// C : 플레이어 시작 위치
+	if (CKeyMgr::Get_Instance()->Key_Down('C') && CTileMgr::Get_Instance()->Check_Tile(ptMouse))
 	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
+		CObj* pPlayer = CAbstractFactory<CPlayer>::Create((float)ptMouse.x, (float)ptMouse.y, 0.f);
+		static_cast<CPlayer*>(pPlayer)->Set_Edit(true);
 
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
-		if (CTileMgr::Get_Instance()->Check_Tile(ptMouse))
-		{
-			CObjMgr::Get_Instance()->Change_Wall(ptMouse, m_eWallID);
-		}
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, pPlayer);
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Down('C'))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
-		if (CTileMgr::Get_Instance()->Check_Tile(ptMouse))
-		{
-			CObj* pPlayer = CAbstractFactory<CPlayer>::Create((float)ptMouse.x, (float)ptMouse.y, 0.f);
-			dynamic_cast<CPlayer*>(pPlayer)->Set_Edit(true);
-
-			CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, pPlayer);
-		}
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Down('V'))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
-		if (CTileMgr::Get_Instance()->Check_Tile(ptMouse))
-		{
-			CObj* Monster = CAbstractFactory<CSlime>::Create((float)ptMouse.x, (float)ptMouse.y, 0.f);
-			dynamic_cast<CMonster*>(Monster)->Set_Edit(true);
-
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, Monster);
-		}
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Down('B'))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
-		if (CTileMgr::Get_Instance()->Check_Tile(ptMouse))
-		{
-			CObj* Monster = CAbstractFactory<CBoss_Slime>::Create((float)ptMouse.x, (float)ptMouse.y, 0.f);
-			dynamic_cast<CMonster*>(Monster)->Set_Edit(true);
-
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, Monster);
-		}
-	}
-	if (CKeyMgr::Get_Instance()->Key_Down('N'))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
-		if (CTileMgr::Get_Instance()->Check_Tile(ptMouse))
-		{
-			CObj* Monster = CAbstractFactory<CLarva>::Create((float)ptMouse.x, (float)ptMouse.y, 0.f);
-			dynamic_cast<CMonster*>(Monster)->Set_Edit(true);
-
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, Monster);
-		}
-	}
-	if (CKeyMgr::Get_Instance()->Key_Down('M'))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x += (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		ptMouse.y += (int)CCameraMgr::Get_Instance()->Get_RenderY();
-
-		if (CTileMgr::Get_Instance()->Check_Tile(ptMouse))
-		{
-			CObj* Monster = CAbstractFactory<CBoss_Hive>::Create((float)ptMouse.x, (float)ptMouse.y, 0.f);
-			dynamic_cast<CMonster*>(Monster)->Set_Edit(true);
-
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, Monster);
-		}
-	}
+	// V, B, N, M : 몬스터 배치
+	if (CKeyMgr::Get_Instance()->Key_Down('V') && CTileMgr::Get_Instance()->Check_Tile(ptMouse))
+		Place_Monster<CSlime>(ptMouse);
+	if (CKeyMgr::Get_Instance()->Key_Down('B') && CTileMgr::Get_Instance()->Check_Tile(ptMouse))
+		Place_Monster<CBoss_Slime>(ptMouse);
+	if (CKeyMgr::Get_Instance()->Key_Down('N') && CTileMgr::Get_Instance()->Check_Tile(ptMouse))
+		Place_Monster<CLarva>(ptMouse);
+	if (CKeyMgr::Get_Instance()->Key_Down('M') && CTileMgr::Get_Instance()->Check_Tile(ptMouse))
+		Place_Monster<CBoss_Hive>(ptMouse);
 
 	if (CKeyMgr::Get_Instance()->Key_Down('S'))
 	{

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CDialogue.h"
 #include "CBmpMgr.h"
 #include "CButton.h"
@@ -8,14 +8,24 @@
 #include "CPlayer.h"
 #include "CInventory.h"
 
+static const int QUEST_MAX = 5;
+
 CDialogue::CDialogue() :
 	m_iQuestNumber(0),
+	m_iQuestItemCode(0),
+	m_iQuestItemCount(0),
+	m_iQuestItemHave(0),
+	m_bQuest(true),
 	m_bQuesting(false),
 	m_bQuestClear(false),
 	m_hTalkDC(nullptr),
 	m_hQuestDC(nullptr),
 	m_hClearDC(nullptr),
-	m_hFailDC(nullptr)
+	m_hFailDC(nullptr),
+	m_hTextDC(nullptr),
+	m_hHelpDC(nullptr),
+	m_hHelpClearDC(nullptr),
+	m_hFontDC(nullptr)
 {
 	for (int i = BT_START; i < BT_END; i++)
 	{
@@ -42,16 +52,12 @@ void CDialogue::Initialize()
 	m_eCurDialogueState = DIA_MAIN;
 	m_ePreDialogueState = DIA_END;
 
-	m_iQuestNumber = 1;
-	m_iQuestItemCode = TURF_WALL;
-	m_iQuestItemCount = 5;
+	m_bQuest = true;
+	Set_Quest(1);
 
 	m_hUiDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Dialogue");
-	m_hTalkDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Talk_1");
-	m_hQuestDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_1");
-	m_hClearDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Clear_1");
-	m_hFailDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Fail_1");
-	m_hHelpDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_1");
+	m_hHelpClearDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_Clear");
+	m_hFontDC = CBmpMgr::Get_Instance()->Find_Image(L"FontNumber");
 
 	for (int i = BT_START; i < BT_END; i++)
 	{
@@ -67,9 +73,12 @@ void CDialogue::Initialize()
 void CDialogue::Update()
 {
 
-	m_bQuestClear = Check_Quest();
-	if (m_bQuestClear)
-		m_hHelpDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_Clear");
+	// 진행 중인 퀘스트가 있을 때만 목표 아이템 보유 수를 확인
+	if (m_bQuesting)
+	{
+		m_iQuestItemHave = static_cast<CInventory*>(CUiMgr::Get_Instance()->Get_PlayerInventory())->Check_ItemCount(m_iQuestItemCode);
+		m_bQuestClear = (m_iQuestItemHave >= m_iQuestItemCount);
+	}
 
 
 	if (m_bOpen)
@@ -91,7 +100,7 @@ void CDialogue::Update()
 	{
 		m_pButton[i]->Update();
 
-		if (dynamic_cast<CButton*>(m_pButton[i])->ButtonClick())
+		if (static_cast<CButton*>(m_pButton[i])->ButtonClick())
 		{
 			switch (i)
 			{
@@ -165,15 +174,17 @@ void CDialogue::Render(HDC _hDC)
 		}
 
 		GdiTransparentBlt(_hDC, 600, 200, 200, 100,
-			m_hHelpDC, 0, 0, 200, 100, RGB(0, 255, 0));
+			m_bQuestClear ? m_hHelpClearDC : m_hHelpDC, 0, 0, 200, 100, RGB(0, 255, 0));
 
 		if (!m_bQuestClear)
 		{
-			HDC hFont = CBmpMgr::Get_Instance()->Find_Image(L"FontNumber");
-			int iCount = dynamic_cast<CInventory*>(CUiMgr::Get_Instance()->Get_PlayerInventory())->Check_ItemCount(m_iQuestItemCode);
+			// 숫자 이미지는 한 자리(0~9)만 있으므로 범위를 제한
+			int iCount = m_iQuestItemHave;
+			if (iCount > 9)
+				iCount = 9;
 
 			GdiTransparentBlt(_hDC, 682, 268, 8, 15,
-				hFont, iCount * 15, 0, 15, 45, RGB(0, 0, 0));
+				m_hFontDC, iCount * 15, 0, 15, 45, RGB(0, 0, 0));
 		}
 	}
 
@@ -210,62 +221,50 @@ int CDialogue::QuestFrame()
 		return -1;
 }
 
-bool CDialogue::Check_Quest()
-{
-	return 	dynamic_cast<CInventory*>(CUiMgr::Get_Instance()->Get_PlayerInventory())->Check_Crafting(m_iQuestItemCode, m_iQuestItemCount);
-}
-
 void CDialogue::Quest_Clear()
 {
-	m_iQuestNumber++;
-	
 	m_bQuesting = false;
+	m_bQuestClear = false;
 
-	if (m_iQuestNumber > 5)
+	if (m_iQuestNumber >= QUEST_MAX)
 	{
 		m_bQuest = false;
 		return;
 	}
 
-	switch (m_iQuestNumber)
+	Set_Quest(m_iQuestNumber + 1);
+}
+
+void CDialogue::Set_Quest(int _iQuestNumber)
+{
+	// 퀘스트 번호별 목표 아이템과 개수
+	static const int iQuestGoal[QUEST_MAX][2] =
 	{
-	case 2:
-		m_hTalkDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Talk_2");
-		m_hQuestDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_2");
-		m_hClearDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Clear_2");
-		m_hFailDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Fail_2");
-		m_hHelpDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_2");
-		m_iQuestItemCode = SLIME_MEAT;
-		m_iQuestItemCount = 5;
-		break;
-	case 3:		
-		m_hTalkDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Talk_3");
-		m_hQuestDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_3");
-		m_hClearDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Clear_3");
-		m_hFailDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Fail_3");
-		m_hHelpDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_3");
-		m_iQuestItemCode = SLIME_CORE;
-		m_iQuestItemCount = 1;
-		break;
-	case 4:
-		m_hTalkDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Talk_4");
-		m_hQuestDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_4");
-		m_hClearDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Clear_4");
-		m_hFailDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Fail_4");
-		m_hHelpDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_4");
-		m_iQuestItemCode = IRON_STONE;
-		m_iQuestItemCount = 5;
-		break;
-	case 5:
-		m_hTalkDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Talk_5");
-		m_hQuestDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_5");
-		m_hClearDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Clear_5");
-		m_hFailDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Fail_5");
-		m_hHelpDC = CBmpMgr::Get_Instance()->Find_Image(L"Slime_NPC_Quest_Help_5");
-		m_iQuestItemCode = HIVE_CORE;
-		m_iQuestItemCount = 1;
-		break;
-	}
+		{ TURF_WALL,  5 },	// 1
+		{ SLIME_MEAT, 5 },	// 2
+		{ SLIME_CORE, 1 },	// 3
+		{ IRON_STONE, 5 },	// 4
+		{ HIVE_CORE,  1 },	// 5
+	};
+
+	m_iQuestNumber = _iQuestNumber;
+	m_iQuestItemCode = iQuestGoal[_iQuestNumber - 1][0];
+	m_iQuestItemCount = iQuestGoal[_iQuestNumber - 1][1];
+	m_iQuestItemHave = 0;
+
+	// 대사 이미지는 "이미지키_퀘스트번호" 규칙으로 찾음
+	auto Find_QuestImage = [_iQuestNumber](const TCHAR* _pKeyFormat) -> HDC
+	{
+		TCHAR szKey[64] = {};
+		swprintf_s(szKey, 64, _pKeyFormat, _iQuestNumber);
+		return CBmpMgr::Get_Instance()->Find_Image(szKey);
+	};
+
+	m_hTalkDC = Find_QuestImage(L"Slime_NPC_Talk_%d");
+	m_hQuestDC = Find_QuestImage(L"Slime_NPC_Quest_%d");
+	m_hClearDC = Find_QuestImage(L"Slime_NPC_Quest_Clear_%d");
+	m_hFailDC = Find_QuestImage(L"Slime_NPC_Quest_Fail_%d");
+	m_hHelpDC = Find_QuestImage(L"Slime_NPC_Quest_Help_%d");
 }
 
 void CDialogue::Change_State()

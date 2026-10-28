@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CTile.h"
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
@@ -42,15 +42,19 @@ void CTile::Update()
 void CTile::Late_Update()
 {
 	int y = (int)(m_tInfo.fY / TILECY);
-	int x =	(int)(m_tInfo.fX / TILECX);
-	int iIndex = x + (y * TILEX);
+	int x = (int)(m_tInfo.fX / TILECX);
+	size_t iIndex = (size_t)(x + (y * TILEX));
 
-	CObj* pWall = (*(CObjMgr::Get_Instance()->Get_VecWall()))[iIndex];
+	vector<CObj*>* pVecWall = CObjMgr::Get_Instance()->Get_VecWall();
 
-	if (dynamic_cast<CWall*>(pWall)->Get_WallID() == WALL_NULL)
-		m_bRender = true;
-	else
+	if (iIndex >= pVecWall->size())
+	{
 		m_bRender = false;
+		return;
+	}
+
+	// 벽이 세워진 칸은 바닥 타일을 그리지 않음
+	m_bRender = (static_cast<CWall*>((*pVecWall)[iIndex])->Get_WallID() == WALL_NULL);
 }
 
 void CTile::Render(HDC _hDC)
@@ -58,37 +62,21 @@ void CTile::Render(HDC _hDC)
 	if (m_eTileID == TILE_NULL)
 		return;
 
-		int iCameraX = (int)CCameraMgr::Get_Instance()->Get_RenderX();
-		int iCameraY = (int)CCameraMgr::Get_Instance()->Get_RenderY();
+	int iCameraX = (int)CCameraMgr::Get_Instance()->Get_RenderX();
+	int iCameraY = (int)CCameraMgr::Get_Instance()->Get_RenderY();
 
-		int	x = (int)m_tInfo.fX / TILECX;
-		int	y = (int)m_tInfo.fY / TILECY;
-
-		int		iCompIndex = y * TILEX + x;
-
-
-		if (0 > iCompIndex || (size_t)iCompIndex >= CObjMgr::Get_Instance()->Get_VecWall()->size())
-			return;
-
-		if(dynamic_cast<CWall*>((*CObjMgr::Get_Instance()->Get_VecWall())[iCompIndex])->Get_WallID() == WALL_NULL)
-		{
-			if (m_bRender)
-			{
-				BitBlt(_hDC, (int)m_tRect.left - iCameraX, (int)m_tRect.top - iCameraY, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
-					m_hTileDC, (int)m_tBmpInfo.fX, (int)m_tBmpInfo.fY, SRCCOPY);
-				//GdiTransparentBlt(_hDC, (int)m_tRect.left - iCameraX, (int)m_tRect.top - iCameraY, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
-				//	m_hTileDC, (int)m_tBmpInfo.fX, (int)m_tBmpInfo.fY, (int)m_tBmpInfo.fCX, (int)m_tBmpInfo.fCY, RGB(255, 255, 255));
-			}
+	// 벽 여부는 Late_Update에서 판정한 m_bRender를 사용
+	if (m_bRender)
+	{
+		BitBlt(_hDC, (int)m_tRect.left - iCameraX, (int)m_tRect.top - iCameraY, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
+			m_hTileDC, (int)m_tBmpInfo.fX, (int)m_tBmpInfo.fY, SRCCOPY);
 	}
 
 	if (m_bUnder && m_hTileUnderDC)
 	{
 		BitBlt(_hDC, (int)m_tRect.left - iCameraX, (int)m_tRect.bottom - iCameraY, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
 			m_hTileUnderDC, 0, 0, SRCCOPY);
-		//GdiTransparentBlt(_hDC, (int)m_tRect.left - iCameraX, (int)m_tRect.bottom - iCameraY, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
-		//	, 0, 0, (int)m_tBmpInfo.fCX, (int)m_tBmpInfo.fCY, RGB(255, 255, 255));
 	}
-
 }
 
 void CTile::Release()

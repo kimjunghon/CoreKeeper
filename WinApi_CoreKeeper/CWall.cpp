@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CWall.h"
 #include "CBmpMgr.h"
 #include "CCameraMgr.h"
@@ -41,6 +41,7 @@ void CWall::Initialize()
 	m_iHp = m_iMaxHp;
 
 	m_bHit = false;
+	m_dwHitTime = GetTickCount();
 	m_dwHitDelay = 400;
 
 	m_hSlotDC = CBmpMgr::Get_Instance()->Find_Image(L"");
@@ -107,75 +108,39 @@ void CWall::Hit(float _fAtkDmg, float _fMass, float _fSpeed, DIRECTION _eDir)
 	if (!m_bHit)
 		return;
 
-	if (m_eWallID == WALL_CLAY || m_eWallID == WALL_CLAY_IRON)
-	{
-		//if (_fAtkDmg >= 60.f)
-		{
-			m_iHp -= (int)_fAtkDmg;
+	m_iHp -= (int)_fAtkDmg;
 
-			if (m_iHp <= 0)
-			{
-				CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-				CSoundMgr::Get_Instance()->PlaySound(L"Wall_Destroy.wav", SOUND_EFFECT, g_fEffectVolume);
-			}
-			else
-			{
-				CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-				CSoundMgr::Get_Instance()->PlaySound(L"Wall_Damage.wav", SOUND_EFFECT, g_fEffectVolume);
-			}
-		}
-		//else
-		//{
-		//	m_iHp -= (int)(_fAtkDmg * 0.8f);
-		//
-		//	CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		//	CSoundMgr::Get_Instance()->PlaySound(L"Wall_NoDamge.wav", SOUND_EFFECT, g_fEffectVolume);
-		//}
-	}
-	else
-	{
-		m_iHp -= (int)_fAtkDmg;
-
-		if(m_iHp <= 0)
-		{
-			CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-			CSoundMgr::Get_Instance()->PlaySound(L"Wall_Destroy.wav", SOUND_EFFECT, g_fEffectVolume);
-		}
-		else
-		{
-			CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-			CSoundMgr::Get_Instance()->PlaySound(L"Wall_Damage.wav", SOUND_EFFECT, g_fEffectVolume);
-		}
-
-	}
-
+	CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
+	CSoundMgr::Get_Instance()->PlaySound(m_iHp <= 0 ? L"Wall_Destroy.wav" : L"Wall_Damage.wav", SOUND_EFFECT, g_fEffectVolume);
 
 	if (m_iHp <= 0)
 	{
-		CWall_Item* pWall_Item = dynamic_cast<CWall_Item*>(CAbstractFactory<CWall_Item>::Create(m_tInfo.fX, m_tInfo.fY - 15.f));
-
+		// 벽 종류별로 드롭할 벽 아이템
+		int iDropItemCode = -1;
 		switch (m_eWallID)
 		{
-		case WALL_TURF:
-			pWall_Item->Set_WallItem(TURF_WALL);
-			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pWall_Item);
-			break;
-		case WALL_DIRT:
-			pWall_Item->Set_WallItem(DIRT_WALL);
-			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pWall_Item);
-			break;
+		case WALL_TURF:			iDropItemCode = TURF_WALL;	break;
+		case WALL_DIRT:			iDropItemCode = DIRT_WALL;	break;
 		case WALL_CLAY:
-			pWall_Item->Set_WallItem(CLAY_WALL);
-			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pWall_Item);
-			break;
-		case WALL_CLAY_IRON:
-			pWall_Item->Set_WallItem(CLAY_WALL);
-			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pWall_Item);
-			CObj* pIron = CAbstractFactory<CItem>::Create(m_tInfo.fX+10.f, m_tInfo.fY- 15.f);
-			dynamic_cast<CItem*>(pIron)->Set_Item(IRON_STONE);
-			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pIron);
-			break;
+		case WALL_CLAY_IRON:	iDropItemCode = CLAY_WALL;	break;
+		default:				break;
 		}
+
+		if (iDropItemCode != -1)
+		{
+			CWall_Item* pWall_Item = static_cast<CWall_Item*>(CAbstractFactory<CWall_Item>::Create(m_tInfo.fX, m_tInfo.fY - 15.f));
+			pWall_Item->Set_WallItem(iDropItemCode);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pWall_Item);
+		}
+
+		// 철광석이 박힌 벽은 철광석도 함께 드롭
+		if (m_eWallID == WALL_CLAY_IRON)
+		{
+			CItem* pIron = static_cast<CItem*>(CAbstractFactory<CItem>::Create(m_tInfo.fX + 10.f, m_tInfo.fY - 15.f));
+			pIron->Set_Item(IRON_STONE);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pIron);
+		}
+
 		Set_WallID(WALL_NULL);
 	}
 

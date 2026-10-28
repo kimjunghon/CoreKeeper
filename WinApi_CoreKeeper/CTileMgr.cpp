@@ -45,6 +45,12 @@ void CTileMgr::Update()
 	int	iMaxX = iCameraX + (WINCX / TILECX) + 2;
 	int	iMaxY = iCameraY + (WINCY / TILECY) + 2;
 
+	// 화면 범위가 맵 끝을 넘으면 다음 줄 타일까지 처리하지 않도록 제한
+	if (iMaxX > TILEX)
+		iMaxX = TILEX;
+	if (iMaxY > TILEY)
+		iMaxY = TILEY;
+
 	for (int i = iMinY; i < iMaxY; ++i)
 	{
 		for (int j = iMinX; j < iMaxX; ++j)
@@ -70,6 +76,12 @@ void CTileMgr::Late_Update()
 
 	int	iMaxX = iCameraX + (WINCX / TILECX) + 2;
 	int	iMaxY = iCameraY + (WINCY / TILECY) + 2;
+
+	// 화면 범위가 맵 끝을 넘으면 다음 줄 타일까지 처리하지 않도록 제한
+	if (iMaxX > TILEX)
+		iMaxX = TILEX;
+	if (iMaxY > TILEY)
+		iMaxY = TILEY;
 
 	for (int i = iMinY; i < iMaxY; ++i)
 	{
@@ -100,6 +112,12 @@ void CTileMgr::Render(HDC _hDC)
 
 	int	iMaxX = iCameraX + (WINCX / TILECX) + 2;
 	int	iMaxY = iCameraY + (WINCY / TILECY) + 2;
+
+	// 화면 범위가 맵 끝을 넘으면 다음 줄 타일까지 처리하지 않도록 제한
+	if (iMaxX > TILEX)
+		iMaxX = TILEX;
+	if (iMaxY > TILEY)
+		iMaxY = TILEY;
 
 	for (int i = iMinY; i < iMaxY; ++i)
 	{
@@ -132,7 +150,7 @@ void CTileMgr::Change_Tile(POINT _pt, TILEID _eTileID)
 	if (0 > iIndex || (size_t)iIndex >= m_vecTile.size())
 		return;
 
-	dynamic_cast<CTile*>(m_vecTile[iIndex])->Set_TileID(_eTileID);
+	m_vecTile[iIndex]->Set_TileID(_eTileID);
 }
 
 bool CTileMgr::Check_Tile(POINT _pt)
@@ -181,119 +199,56 @@ void CTileMgr::Move_Frame(int _iIndex)
 	if (m_vecTile[_iIndex]->Get_TileID() == TILE_NULL || m_vecTile[_iIndex]->Get_TileID() == TILE_EDIT)
 		return;
 
-	int dX[4] = { 0, 1, 0, -1 };
-	int dY[4] = { 1, 0, -1, 0 };
-	int dZ[4] = { 0,0,0,0}; //하, 우, 상, 좌
-	int Dir = 0;
-	int iIndex = 0;
+	// 하, 우, 상, 좌
+	static const int dX[4] = { 0, 1, 0, -1 };
+	static const int dY[4] = { 1, 0, -1, 0 };
 
-	for (Dir = 0; Dir < 4; Dir++)
+	// 이웃 타일 조합(하 1 / 우 2 / 상 4 / 좌 8)별 타일 스프라이트 위치
+	static const POINT ptTile[16] =
 	{
-		iIndex = _iIndex + dX[Dir] + (dY[Dir] * TILEX);
-		
-		if (iIndex < 0 || iIndex >= TILEX * TILEY)
+		{ 120,   0 },	//  0 : 없음
+		{  40, 120 },	//  1 : 하
+		{   0, 120 },	//  2 : 우
+		{   0,   0 },	//  3 : 하+우
+		{ 120, 120 },	//  4 : 상
+		{ 120,  80 },	//  5 : 하+상
+		{   0,  80 },	//  6 : 우+상
+		{   0,  40 },	//  7 : 하+우+상
+		{  80, 120 },	//  8 : 좌
+		{  80,   0 },	//  9 : 하+좌
+		{ 120,  40 },	// 10 : 우+좌
+		{  40,   0 },	// 11 : 하+우+좌
+		{  80,  80 },	// 12 : 상+좌
+		{  80,  40 },	// 13 : 하+상+좌
+		{  40,  80 },	// 14 : 우+상+좌
+		{  40,  40 },	// 15 : 전체
+	};
+
+	int iX = _iIndex % TILEX;
+	int iY = _iIndex / TILEX;
+	int iMask = 0;
+
+	for (int iDir = 0; iDir < 4; ++iDir)
+	{
+		int iNearX = iX + dX[iDir];
+		int iNearY = iY + dY[iDir];
+
+		// 맵 밖(좌우 끝에서 다음 줄로 넘어가는 경우 포함)은 빈 칸으로 취급
+		if (iNearX < 0 || iNearX >= TILEX || iNearY < 0 || iNearY >= TILEY)
 			continue;
 
-		else if (m_vecTile[iIndex]->Get_TileID() != TILE_NULL && m_vecTile[iIndex]->Get_TileID() != TILE_EDIT)
-		{
-			dZ[Dir] = 1;
-		}
+		size_t iNearIndex = (size_t)(iNearX + iNearY * TILEX);
+		if (iNearIndex >= m_vecTile.size())
+			continue;
+
+		TILEID eNearID = m_vecTile[iNearIndex]->Get_TileID();
+		if (eNearID != TILE_NULL && eNearID != TILE_EDIT)
+			iMask |= (1 << iDir);
 	}
 
-	if (dZ[0] == 0)
-	{
-		m_vecTile[_iIndex]->Set_Under(true);
-	}
-	else
-	{
-		m_vecTile[_iIndex]->Set_Under(false);
-	}
-
-	if (dZ[0] == 1)
-	{
-		if (dZ[1] == 1)
-		{
-			if (dZ[2] == 1)
-			{
-				if (dZ[3] == 1)
-				{
-					m_vecTile[_iIndex]->Set_BmpPos(40.f, 40.f);
-				}
-				else
-				{
-					m_vecTile[_iIndex]->Set_BmpPos(0.f, 40.f);
-				}
-			}
-			else if (dZ[3] == 1)
-			{
-				m_vecTile[_iIndex]->Set_BmpPos(40, 0.f);
-			}
-			else
-			{
-				m_vecTile[_iIndex]->Set_BmpPos(0.f, 0.f);
-			}
-		}
-		else if (dZ[2] == 1)
-		{
-			if (dZ[3] == 1)
-			{
-				m_vecTile[_iIndex]->Set_BmpPos(80.f, 40.f);
-			}
-			else
-			{
-				m_vecTile[_iIndex]->Set_BmpPos(120.f, 80.f);
-			}
-		}
-		else if (dZ[3] == 1)
-		{
-			m_vecTile[_iIndex]->Set_BmpPos(80.f, 0.f);
-		}
-		else
-		{
-			m_vecTile[_iIndex]->Set_BmpPos(40.f, 120.f);
-		}
-	}
-	else if (dZ[1] == 1)
-	{
-		if (dZ[2] == 1)
-		{
-			if (dZ[3] == 1)
-			{
-				m_vecTile[_iIndex]->Set_BmpPos(40.f, 80.f);
-			}
-			else
-			{
-				m_vecTile[_iIndex]->Set_BmpPos(0.f, 80.f);
-			}
-		}
-		else if (dZ[3] == 1)
-		{
-			m_vecTile[_iIndex]->Set_BmpPos(120.f, 40.f);
-		}
-		else
-		{
-			m_vecTile[_iIndex]->Set_BmpPos(0.f, 120.f);
-		}
-	}
-	else if(dZ[2] == 1)
-	{
-		if (dZ[3] == 1)
-		{
-			m_vecTile[_iIndex]->Set_BmpPos(80.f, 80.f);
-		}
-		else
-		{
-			m_vecTile[_iIndex]->Set_BmpPos(120.f, 120.f);
-		}
-	}
-	else if (dZ[3] == 1)
-	{
-		m_vecTile[_iIndex]->Set_BmpPos(80.f, 120.f);
-	}
-	else
-	{
-		m_vecTile[_iIndex]->Set_BmpPos(120.f, 0.f);
-	}
+	// 아래쪽에 타일이 없으면 타일 옆면(Under)을 그림
+	m_vecTile[_iIndex]->Set_Under(!(iMask & 1));
+	m_vecTile[_iIndex]->Set_BmpPos((float)ptTile[iMask].x, (float)ptTile[iMask].y);
 }
 
 

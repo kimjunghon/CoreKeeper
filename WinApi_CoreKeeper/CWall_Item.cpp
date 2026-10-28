@@ -109,14 +109,17 @@ void CWall_Item::Use()
 
 	int iPlayerIndex = iPlayerX + (iPlayerY * TILEX);
 
+	if (iMouseX < 0 || iMouseX >= TILEX || iMouseY < 0 || iMouseY >= TILEY)
+		return;
+
 	if (iMouseIndex == iPlayerIndex || abs(iMouseX - iPlayerX) > 1 || abs(iMouseY - iPlayerY) > 1)
 		return;
 
-	CObj* pWall = (*(CObjMgr::Get_Instance()->Get_VecWall()))[iMouseIndex];
+	CWall* pWall = static_cast<CWall*>((*(CObjMgr::Get_Instance()->Get_VecWall()))[iMouseIndex]);
 
-	if (dynamic_cast<CWall*>(pWall)->Get_WallID() == WALL_NULL)
+	if (pWall->Get_WallID() == WALL_NULL)
 	{
-		dynamic_cast<CWall*>(pWall)->Set_WallID(m_eWallID);
+		pWall->Set_WallID(m_eWallID);
 		--m_iCount;
 
 		if (m_iCount <= 0)
