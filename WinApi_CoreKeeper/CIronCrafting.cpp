@@ -2,7 +2,6 @@
 #include "CIronCrafting.h"
 #include "CBmpMgr.h"
 #include "CCraftingSlot.h"
-#include "CAbstractFactory.h"
 
 CIronCrafting::CIronCrafting()
 {
@@ -27,25 +26,13 @@ void CIronCrafting::Initialize()
 
 	__super::Update_Rect();
 
-	CUi* pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 40.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(IRON_SWORD);
-	m_vecCraftingSlot.push_back(pSlot);
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 85.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(IRON_PICKAXE);
-	m_vecCraftingSlot.push_back(pSlot);
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 130.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(IRON_BOW);
-	m_vecCraftingSlot.push_back(pSlot);
+	AddCraftingSlot(m_tRect.left + 40.f, m_tRect.top + 70.f, IRON_SWORD);
+	AddCraftingSlot(m_tRect.left + 85.f, m_tRect.top + 70.f, IRON_PICKAXE);
+	AddCraftingSlot(m_tRect.left + 130.f, m_tRect.top + 70.f, IRON_BOW);
 
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 40.f, m_tRect.top + 120.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(IRON_HELM);
-	m_vecCraftingSlot.push_back(pSlot);
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 85.f, m_tRect.top + 120.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(IRON_CHEST);
-	m_vecCraftingSlot.push_back(pSlot);
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 130.f, m_tRect.top + 120.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(IRON_PANTS);
-	m_vecCraftingSlot.push_back(pSlot);
+	AddCraftingSlot(m_tRect.left + 40.f, m_tRect.top + 120.f, IRON_HELM);
+	AddCraftingSlot(m_tRect.left + 85.f, m_tRect.top + 120.f, IRON_CHEST);
+	AddCraftingSlot(m_tRect.left + 130.f, m_tRect.top + 120.f, IRON_PANTS);
 
 	m_hUiDC = CBmpMgr::Get_Instance()->Find_Image(L"Crafting_UI");
 }

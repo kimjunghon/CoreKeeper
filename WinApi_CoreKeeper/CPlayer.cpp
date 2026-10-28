@@ -422,11 +422,11 @@ void CPlayer::Key_Input()
 				{
 					m_eCurState = OS_ATTACK;
 
-					CItem* Equip = dynamic_cast<CItem*>(m_pEquipItem);
-					if (Equip != nullptr)
+					CItem* pEquip = dynamic_cast<CItem*>(m_pEquipItem);
+					if (pEquip != nullptr)
 					{
-						Equip->Use();
-						if (Equip->Is_Dead())
+						pEquip->Use();
+						if (pEquip->Is_Dead())
 							m_pEquipItem = nullptr;
 					}
 					else

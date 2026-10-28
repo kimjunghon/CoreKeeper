@@ -3,6 +3,7 @@
 #include "CCraftingSlot.h"
 #include "CUiMgr.h"
 #include "CInventory.h"
+#include "CAbstractFactory.h"
 
 
 CCrafting::CCrafting()
@@ -77,4 +78,17 @@ void CCrafting::Release()
 	for_each(m_vecCraftingSlot.begin(), m_vecCraftingSlot.end(), Safe_Delete<CUi*>);
 	m_vecCraftingSlot.clear();
 	m_vecCraftingSlot.shrink_to_fit();
+}
+
+void CCrafting::AddCraftingSlot(float _fX, float _fY, int _iCraftingItemCode)
+{
+	CUi* pSlot = CUIFactory<CCraftingSlot>::Create(_fX, _fY);
+
+	if (pSlot == nullptr)
+	{
+		return;
+	}
+
+	static_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(_iCraftingItemCode);
+	m_vecCraftingSlot.push_back(pSlot);
 }

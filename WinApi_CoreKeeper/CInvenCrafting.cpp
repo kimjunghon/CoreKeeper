@@ -27,16 +27,9 @@ void CInvenCrafting::Initialize()
 
 	__super::Update_Rect();
 
-	CUi* pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 40.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(WOOD_SWORD);
-	m_vecCraftingSlot.push_back(pSlot);
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left +85.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(WOOD_PICKAXE);
-	m_vecCraftingSlot.push_back(pSlot);
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 130.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(WOOD_BOW);
-	m_vecCraftingSlot.push_back(pSlot);
+	AddCraftingSlot(m_tRect.left + 40.f, m_tRect.top + 70.f, WOOD_SWORD);
+	AddCraftingSlot(m_tRect.left + 85.f, m_tRect.top + 70.f, WOOD_PICKAXE);
+	AddCraftingSlot(m_tRect.left + 130.f, m_tRect.top + 70.f, WOOD_BOW);
 
-	
 	m_hUiDC = CBmpMgr::Get_Instance()->Find_Image(L"Crafting_UI");
 }

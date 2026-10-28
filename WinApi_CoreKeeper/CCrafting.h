@@ -14,6 +14,10 @@ public:
     void Release() override;
 
     vector<CUi*>* Get_vecCraftingSlot() { return &m_vecCraftingSlot; }
+
+protected:
+    void AddCraftingSlot(float _fX, float _fY, int _iCraftingItemCode);
+
 protected:
     vector<CUi*> m_vecCraftingSlot;
     

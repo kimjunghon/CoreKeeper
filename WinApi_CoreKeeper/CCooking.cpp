@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CCooking.h"
-#include "CAbstractFactory.h"
 #include "CCraftingSlot.h"
 #include "CBmpMgr.h"
 #include "CCollisionMgr.h"
@@ -28,17 +27,11 @@ void CCooking::Initialize()
 
 	__super::Update_Rect();
 
-	CUi* pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 40.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(SLIME_FOOD);
-	m_vecCraftingSlot.push_back(pSlot);
+	AddCraftingSlot(m_tRect.left + 40.f, m_tRect.top + 70.f, SLIME_FOOD);
+	CCollisionMgr::Get_Instance()->Push_CollisionSlotList(m_vecCraftingSlot.back(), SLOT_CRAFTING);
 
-	CCollisionMgr::Get_Instance()->Push_CollisionSlotList(pSlot, SLOT_CRAFTING);
-
-	pSlot = CUIFactory<CCraftingSlot>::Create(m_tRect.left + 85.f, m_tRect.top + 70.f);
-	dynamic_cast<CCraftingSlot*>(pSlot)->Set_CraftingItem(LARVA_FOOD);
-	m_vecCraftingSlot.push_back(pSlot);
-
-	CCollisionMgr::Get_Instance()->Push_CollisionSlotList(pSlot, SLOT_CRAFTING);
+	AddCraftingSlot(m_tRect.left + 85.f, m_tRect.top + 70.f, LARVA_FOOD);
+	CCollisionMgr::Get_Instance()->Push_CollisionSlotList(m_vecCraftingSlot.back(), SLOT_CRAFTING);
 
 	m_hUiDC = CBmpMgr::Get_Instance()->Find_Image(L"Crafting_UI");
 }

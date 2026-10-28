@@ -407,87 +407,23 @@ void CCollisionMgr::Mouse_Slot_Collision_Rect()
 				
 				if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
 				{
-					if(i == SLOT_EQUIP_CHEST)
+					if (i == SLOT_EQUIP_HELM || i == SLOT_EQUIP_CHEST || i == SLOT_EQUIP_PANTS)
 					{
-						if (pTemp)
+						// 슬롯 부위에 맞는 방어구 종류
+						ITEMCLASS eNeedClass = IC_ARMOR_PANTS;
+						if (i == SLOT_EQUIP_HELM)
+							eNeedClass = IC_ARMOR_HELM;
+						else if (i == SLOT_EQUIP_CHEST)
+							eNeedClass = IC_ARMOR_CHEST;
+
+						// 빈손(장비 해제)이거나 부위가 맞는 방어구일 때만 교체
+						if (!pTemp || static_cast<CItem*>(pTemp)->Get_ItemClass() == eNeedClass)
 						{
-							CItem* pItem = dynamic_cast<CItem*>(pTemp);
-							if (pItem->Get_ItemClass() == IC_ARMOR_CHEST)
-							{
-								CSlot* pSlot = dynamic_cast<CSlot*>(vecSlot);
-
-								pMouse->Set_Item(pSlot->Get_Item());
-
-								pSlot->Set_Item(pTemp);
-
-								CSoundMgr::Get_Instance()->StopSound(SOUND_UI);
-								CSoundMgr::Get_Instance()->PlaySound(L"EquipArmor.wav", SOUND_UI, 0.8f);
-							}
-						}
-						else
-						{
-							CSlot* pSlot = dynamic_cast<CSlot*>(vecSlot);
+							CSlot* pSlot = static_cast<CSlot*>(vecSlot);
 
 							pMouse->Set_Item(pSlot->Get_Item());
-
 							pSlot->Set_Item(pTemp);
 
-
-							CSoundMgr::Get_Instance()->StopSound(SOUND_UI);
-							CSoundMgr::Get_Instance()->PlaySound(L"EquipArmor.wav", SOUND_UI, 0.8f);
-						}
-
-					}
-					else if (i == SLOT_EQUIP_HELM)
-					{
-						if (pTemp)
-						{
-							CItem* pItem = dynamic_cast<CItem*>(pTemp);
-							if (pItem->Get_ItemClass() == IC_ARMOR_HELM)
-							{
-								CSlot* pSlot = dynamic_cast<CSlot*>(vecSlot);
-
-								pMouse->Set_Item(pSlot->Get_Item());
-
-								pSlot->Set_Item(pTemp);
-								CSoundMgr::Get_Instance()->StopSound(SOUND_UI);
-								CSoundMgr::Get_Instance()->PlaySound(L"EquipArmor.wav", SOUND_UI, 0.8f);
-							}
-						}
-						else
-						{
-							CSlot* pSlot = dynamic_cast<CSlot*>(vecSlot);
-
-							pMouse->Set_Item(pSlot->Get_Item());
-
-							pSlot->Set_Item(pTemp);
-							CSoundMgr::Get_Instance()->StopSound(SOUND_UI);
-							CSoundMgr::Get_Instance()->PlaySound(L"EquipArmor.wav", SOUND_UI, 0.8f);
-						}
-					}
-					else if (i == SLOT_EQUIP_PANTS)
-					{
-						if (pTemp)
-						{
-							CItem* pItem = dynamic_cast<CItem*>(pTemp);
-							if (pItem->Get_ItemClass() == IC_ARMOR_PANTS)
-							{
-								CSlot* pSlot = dynamic_cast<CSlot*>(vecSlot);
-
-								pMouse->Set_Item(pSlot->Get_Item());
-
-								pSlot->Set_Item(pTemp);
-								CSoundMgr::Get_Instance()->StopSound(SOUND_UI);
-								CSoundMgr::Get_Instance()->PlaySound(L"EquipArmor.wav", SOUND_UI, 0.8f);
-							}
-						}
-						else
-						{
-							CSlot* pSlot = dynamic_cast<CSlot*>(vecSlot);
-
-							pMouse->Set_Item(pSlot->Get_Item());
-
-							pSlot->Set_Item(pTemp);
 							CSoundMgr::Get_Instance()->StopSound(SOUND_UI);
 							CSoundMgr::Get_Instance()->PlaySound(L"EquipArmor.wav", SOUND_UI, 0.8f);
 						}
