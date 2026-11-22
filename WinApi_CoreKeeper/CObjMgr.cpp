@@ -59,6 +59,12 @@ void CObjMgr::Update()
 		int	iMaxX = iCameraX + (WINCX / TILECX) + 2;
 		int	iMaxY = iCameraY + (WINCY / TILECY) + 2;
 
+		// 화면 범위가 맵 끝을 넘으면 다음 줄 타일까지 처리하지 않도록 제한
+		if (iMaxX > TILEX)
+			iMaxX = TILEX;
+		if (iMaxY > TILEY)
+			iMaxY = TILEY;
+
 		for (int i = iMinY; i < iMaxY; ++i)
 		{
 			for (int j = iMinX; j < iMaxX; ++j)
@@ -105,6 +111,12 @@ void CObjMgr::Late_Update()
 		int	iMaxX = iCameraX + (WINCX / TILECX) + 2;
 		int	iMaxY = iCameraY + (WINCY / TILECY) + 2;
 
+		// 화면 범위가 맵 끝을 넘으면 다음 줄 타일까지 처리하지 않도록 제한
+		if (iMaxX > TILEX)
+			iMaxX = TILEX;
+		if (iMaxY > TILEY)
+			iMaxY = TILEY;
+
 		for (int i = iMinY; i < iMaxY; ++i)
 		{
 			for (int j = iMinX; j < iMaxX; ++j)
@@ -118,9 +130,9 @@ void CObjMgr::Late_Update()
 
 				m_vecWall[iIndex]->Late_Update();
 
-				CWall* pWall = dynamic_cast<CWall*>(m_vecWall[iIndex]);
+				CWall* pWall = static_cast<CWall*>(m_vecWall[iIndex]);
 
-				if (!pWall || pWall->Get_WallID() == WALL_NULL)
+				if (pWall->Get_WallID() == WALL_NULL)
 					continue;
 
 				RENDERID eRender = m_vecWall[iIndex]->Get_RenderID();
@@ -212,123 +224,58 @@ void CObjMgr::Change_Wall(POINT _pt, WALLID _eWallID)
 
 void CObjMgr::Move_Wall_Roof_Frame(int _iIndex)
 {
-	CWall* pWall = dynamic_cast<CWall*>(m_vecWall[_iIndex]);
-
-	if (!pWall)
-		return;
+	CWall* pWall = static_cast<CWall*>(m_vecWall[_iIndex]);
 
 	if (pWall->Get_WallID() == WALL_NULL)
 		return;
 
-	int dX[4] = { 0, 1, 0, -1 };
-	int dY[4] = { 1, 0, -1, 0 };
-	int dZ[4] = { 0,0,0,0 }; //하, 우, 상, 좌
-	int Dir = 0;
-	int iIndex = 0;
+	// 하, 우, 상, 좌
+	static const int dX[4] = { 0, 1, 0, -1 };
+	static const int dY[4] = { 1, 0, -1, 0 };
 
-	for (Dir = 0; Dir < 4; Dir++)
+	// 이웃 벽 조합(하 1 / 우 2 / 상 4 / 좌 8)별 지붕 스프라이트 위치
+	static const POINT ptRoof[16] =
 	{
-		iIndex = _iIndex + dX[Dir] + (dY[Dir] * TILEX);
+		{   0,  0 },	//  0 : 없음
+		{ 280,  0 },	//  1 : 하
+		{ 120, 80 },	//  2 : 우
+		{  40,  0 },	//  3 : 하+우
+		{ 280, 80 },	//  4 : 상
+		{ 240, 80 },	//  5 : 하+상
+		{ 160,  0 },	//  6 : 우+상
+		{   0, 80 },	//  7 : 하+우+상
+		{ 200, 80 },	//  8 : 좌
+		{ 120,  0 },	//  9 : 하+좌
+		{ 160, 80 },	// 10 : 우+좌
+		{  80,  0 },	// 11 : 하+우+좌
+		{ 240,  0 },	// 12 : 상+좌
+		{  80, 80 },	// 13 : 하+상+좌
+		{ 200,  0 },	// 14 : 우+상+좌
+		{  40, 80 },	// 15 : 전체
+	};
 
-		if (iIndex < 0 || iIndex >= TILEX * TILEY)
+	int iX = _iIndex % TILEX;
+	int iY = _iIndex / TILEX;
+	int iMask = 0;
+
+	for (int iDir = 0; iDir < 4; ++iDir)
+	{
+		int iNearX = iX + dX[iDir];
+		int iNearY = iY + dY[iDir];
+
+		// 맵 밖(좌우 끝에서 다음 줄로 넘어가는 경우 포함)은 빈 칸으로 취급
+		if (iNearX < 0 || iNearX >= TILEX || iNearY < 0 || iNearY >= TILEY)
 			continue;
 
-		CWall* pTemp = dynamic_cast<CWall*>(m_vecWall[iIndex]);
-
-		if (!pTemp)
+		size_t iNearIndex = (size_t)(iNearX + iNearY * TILEX);
+		if (iNearIndex >= m_vecWall.size())
 			continue;
 
-		if (pTemp->Get_WallID() != WALL_NULL)
-		{
-			dZ[Dir] = 1;
-		}
+		if (static_cast<CWall*>(m_vecWall[iNearIndex])->Get_WallID() != WALL_NULL)
+			iMask |= (1 << iDir);
 	}
 
-	if (dZ[0] == 1)
-	{
-		if (dZ[1] == 1)
-		{
-			if (dZ[2] == 1)
-			{
-				if (dZ[3] == 1)
-				{
-					pWall->Set_BmpPos(40.f, 80.f);
-				}
-				else
-				{
-					pWall->Set_BmpPos(0.f, 80.f);
-				}
-			}
-			else if (dZ[3] == 1)
-			{
-				pWall->Set_BmpPos(80.f, 0.f);
-			}
-			else
-			{
-				pWall->Set_BmpPos(40.f, 0.f);
-			}
-		}
-		else if (dZ[2] == 1)
-		{
-			if (dZ[3] == 1)
-			{
-				pWall->Set_BmpPos(80.f, 80.f);
-			}
-			else
-			{
-				pWall->Set_BmpPos(240.f, 80.f);
-			}
-		}
-		else if (dZ[3] == 1)
-		{
-			pWall->Set_BmpPos(120.f, 0.f);
-		}
-		else
-		{
-			pWall->Set_BmpPos(280.f, 0.f);
-		}
-	}
-	else if (dZ[1] == 1)
-	{
-		if (dZ[2] == 1)
-		{
-			if (dZ[3] == 1)
-			{
-				pWall->Set_BmpPos(200.f, 0.f);
-			}
-			else
-			{
-				pWall->Set_BmpPos(160.f, 0.f);
-			}
-		}
-		else if (dZ[3] == 1)
-		{
-			pWall->Set_BmpPos(160.f, 80.f);
-		}
-		else
-		{
-			pWall->Set_BmpPos(120.f, 80.f);
-		}
-	}
-	else if (dZ[2] == 1)
-	{
-		if (dZ[3] == 1)
-		{
-			pWall->Set_BmpPos(240.f, 0.f);
-		}
-		else
-		{
-			pWall->Set_BmpPos(280.f, 80.f);
-		}
-	}
-	else if (dZ[3] == 1)
-	{
-		pWall->Set_BmpPos(200.f, 80.f);
-	}
-	else
-	{
-		pWall->Set_BmpPos(0.f, 0.f);
-	}
+	pWall->Set_BmpPos((float)ptRoof[iMask].x, (float)ptRoof[iMask].y);
 }
 
 void CObjMgr::Save_Player()
