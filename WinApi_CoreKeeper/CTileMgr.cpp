@@ -294,10 +294,16 @@ void CTileMgr::Load_Tile()
 
 	while (true)
 	{
-		ReadFile(hFile, &tInfo, sizeof(INFO), &dwByte, NULL);
-		ReadFile(hFile, &iTileID, sizeof(int), &dwByte, NULL);
+		if (FALSE == ReadFile(hFile, &tInfo, sizeof(INFO), &dwByte, NULL))
+			break;
 
-		if (dwByte == 0)
+		if (dwByte != sizeof(INFO))
+			break;
+
+		if (FALSE == ReadFile(hFile, &iTileID, sizeof(int), &dwByte, NULL))
+			break;
+
+		if (dwByte != sizeof(int))
 			break;
 
 		CTile* pTile = CTileFactory<CTile>::Create(tInfo.fX, tInfo.fY);
